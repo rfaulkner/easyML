@@ -2,8 +2,8 @@
 Module implementing the view portion of the MVC pattern.
 """
 
-from horsebeater.src import logging
-from horsebeater.config import settings
+from versus.src import logging
+from versus.config import settings
 
 __author__ = settings.AUTHORS
 __date__ = "2013-08-20"
@@ -12,8 +12,8 @@ __license__ = settings.LICENSE
 from flask import Flask, render_template, Markup, redirect, url_for, \
     request, escape, flash, jsonify, make_response
 
-from horsebeater.src.web.session import APIUser
-from horsebeater.src.web import app
+from versus.src.web.session import APIUser
+from versus.src.web import app
 
 # Flask Login views
 

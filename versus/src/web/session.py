@@ -12,8 +12,8 @@ __author__ = {
 __date__ = "2013-03-21"
 __license__ = "GPL (version 2 or later)"
 
-from horsebeater.config import settings
-from horsebeater.src import logging
+from versus.config import settings
+from versus.src import logging
 
 # API User Authentication
 # #######################
