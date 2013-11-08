@@ -9,14 +9,14 @@ with open('README.md') as file:
 __version__ = '0.0.1'
 
 setup(
-    name='versus',
+    name='test',
     version=__version__,
     long_description=long_description,
     description='Interesting ways of mixing human collaboration with Machine Learning.',
-    url='http://www.github.com/rfaulkner/versus',
+    url='http://www.github.com/rfaulkner/test',
     author="Ryan Faulkner",
     author_email="bobs.ur.uncle@gmail.com",
-    packages=['versus.src', 'versus.config'],
+    packages=['test.src', 'test.config'],
     install_requires=[
         'Flask == 0.9',
         'python-dateutil >= 2.1',

@@ -3,7 +3,7 @@
 
 """
     This module defines the entry point for flask_ web server implementation
-    of the versus.com.  This module is consumable
+    of the test.com.  This module is consumable
     by the Apache web server via WSGI interface via mod_wsgi.  An Apache
     server can be pointed to api.wsgi such that Apache may be used as a
     wrapper in this way.
@@ -12,7 +12,7 @@
 
 """
 
-from versus.config import settings
+from test.config import settings
 
 __author__ = settings.AUTHORS
 __date__ = "2013-08-20"
@@ -20,7 +20,7 @@ __license__ = settings.LICENSE
 
 from flask import Flask, render_template, Markup, redirect, url_for, \
     request, escape, flash, jsonify, make_response
-from versus.src.web import app
+from test.src.web import app
 from views import init_views
 
 ######
@@ -38,7 +38,7 @@ if not app.debug:
 
     mail_handler = SMTPHandler('127.0.0.1',
         'bobs.ur.uncle@gmail.com',
-        settings.ADMINS, 'versus encountered error')
+        settings.ADMINS, 'test encountered error')
     mail_handler.setLevel(logging.ERROR)
     mail_handler.setFormatter(Formatter('''
     Message type:       %(levelname)s
@@ -55,7 +55,7 @@ if not app.debug:
 
 # With the presence of flask.ext.login module
 if settings.__flask_login_exists__:
-    from versus.src.web.session import login_manager
+    from test.src.web.session import login_manager
     login_manager.setup_app(app)
 
 
