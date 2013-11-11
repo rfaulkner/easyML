@@ -20,6 +20,8 @@ setup(
     install_requires=[
         'Flask == 0.9',
         'python-dateutil >= 2.1',
+        'numpy >= 1.8.0',
+        'theano >= 0.6.0rc1',
         # MySQLdb is not in PyPi
     ],
     classifiers=[
