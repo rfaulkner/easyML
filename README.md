@@ -1,7 +1,11 @@
-Madbox
-======
+DynamicLearn
+============
 
-Interesting ways of mixing human collaboration with Machine Learning.
+Interesting ways of mixing human collaboration with Machine Learning.  This project leverages the Theano package [1]
+to dynamically train deep neural networks for production environments.  Theano optimizes and simplifies training over
+deep models.
+
+[1] http://deeplearning.net/software/theano/
 
 Setup
 -----
