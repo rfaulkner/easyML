@@ -8,6 +8,8 @@ import os
 import sys
 import time
 
+from rbm import RBM
+
 import numpy
 
 import theano.config as config
@@ -257,9 +259,14 @@ class MLP(object):
 
 
 class DBN(object):
+    """Deep Belief Network representation."""
 
-    def __init__(self, numpy_rng, theano_rng=None, n_ins=784,
-                hidden_layers_sizes=(500, 500), n_outs=10):
+    def __init__(self,
+                 numpy_rng,
+                 theano_rng=None,
+                 n_ins=784,
+                 hidden_layers_sizes=(500, 500),
+                 n_outs=10):
         """This class is made to support a variable number of layers.
 
         :type numpy_rng: numpy.random.RandomState
@@ -285,17 +292,18 @@ class DBN(object):
         self.rbm_layers = []
         self.params = []
         self.n_layers = len(hidden_layers_sizes)
+        self.numpy_rng = numpy_rng
 
         assert self.n_layers > 0
 
         if not theano_rng:
             theano_rng = RandomStreams(numpy_rng.randint(2 ** 30))
+        self.theano_rng = theano_rng
 
         # allocate symbolic variables for the data
         self.x = T.matrix('x')  # the data is presented as rasterized images
         self.y = T.ivector('y')  # the labels are presented as 1D vector of
                                  # [int] labels
-
 
     def train_layers(self, layers_sizes):
         """
@@ -316,10 +324,10 @@ class DBN(object):
             else:
                 layer_input = self.sigmoid_layers[-1].output
 
-            sigmoid_layer = HiddenLayer(rng=numpy_rng,
-                                        input=layer_input,
+            sigmoid_layer = HiddenLayer(rng=self.numpy_rng,
+                                        _input=layer_input,
                                         n_in=input_size,
-                                        n_out=hidden_layers_sizes[i],
+                                        n_out=layers_sizes[i],
                                         activation=T.nnet.sigmoid)
 
             # add the layer to our list of layers
@@ -331,11 +339,11 @@ class DBN(object):
             self.params.extend(sigmoid_layer.params)
 
             # Construct an RBM that shared weights with this layer
-            rbm_layer = RBM(numpy_rng=numpy_rng,
-                            theano_rng=theano_rng,
-                            input=layer_input,
+            rbm_layer = RBM(numpy_rng=self.numpy_rng,
+                            theano_rng=self.theano_rng,
+                            _input=layer_input,
                             n_visible=input_size,
-                            n_hidden=hidden_layers_sizes[i],
+                            n_hidden=layers_sizes[i],
                             W=sigmoid_layer.W,
                             hbias=sigmoid_layer.b)
             self.rbm_layers.append(rbm_layer)
