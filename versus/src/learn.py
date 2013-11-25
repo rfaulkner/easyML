@@ -13,7 +13,7 @@ class HiddenLayer(object):
     """
     Represents the hidden layer of a DBN
     """
-    
+
     def __init__(self, rng, _input, n_in, n_out, activation=T.tanh):
         """
         Typical hidden layer of a MLP: units are fully-connected and have
@@ -94,3 +94,47 @@ class DBN(object):
         self.x = T.matrix('x')  # the data is presented as rasterized images
         self.y = T.ivector('y')  # the labels are presented as 1D vector of
                                  # [int] labels
+
+
+    def train_layers(self, layers_sizes):
+        """
+        Method that iteratively trains the DBN layerwise
+        """
+        for i in xrange(self.n_layers):
+            # construct the sigmoidal layer
+
+            # the size of the input is either the number of hidden units of the
+            # layer below or the input size if we are on the first layer
+            if i == 0:
+                input_size = layers_sizes[i - 1]
+
+            # the input to this layer is either the activation of the hidden
+            # layer below or the input of the DBN if you are on the first layer
+            if i == 0:
+                layer_input = self.x
+            else:
+                layer_input = self.sigmoid_layers[-1].output
+
+            sigmoid_layer = HiddenLayer(rng=numpy_rng,
+                                        input=layer_input,
+                                        n_in=input_size,
+                                        n_out=hidden_layers_sizes[i],
+                                        activation=T.nnet.sigmoid)
+
+            # add the layer to our list of layers
+            self.sigmoid_layers.append(sigmoid_layer)
+
+            # its arguably a philosophical question...  but we are going to only declare that
+            # the parameters of the sigmoid_layers are parameters of the DBN. The visible
+            # biases in the RBM are parameters of those RBMs, but not of the DBN.
+            self.params.extend(sigmoid_layer.params)
+
+            # Construct an RBM that shared weights with this layer
+            rbm_layer = RBM(numpy_rng=numpy_rng,
+                            theano_rng=theano_rng,
+                            input=layer_input,
+                            n_visible=input_size,
+                            n_hidden=hidden_layers_sizes[i],
+                            W=sigmoid_layer.W,
+                            hbias=sigmoid_layer.b)
+            self.rbm_layers.append(rbm_layer)
