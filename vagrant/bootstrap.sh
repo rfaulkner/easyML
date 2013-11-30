@@ -9,12 +9,14 @@ rm -rf /var/www
 ln -fs /vagrant /var/www
 
 
-#   Geeneral Packages
+#   General Packages
 #   ---------------
 
 apt-get install -y git
 apt-get install -y python-pip
 apt-get install -y vim
+apt-get install -y vim
+apt-get install -y redis-server
 
 
 #   Hadoop Packages
