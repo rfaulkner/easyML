@@ -38,3 +38,6 @@ nosetests.xml
 
 # Project dependencies to ignore
 settings.py
+vagrant/.vagrant
+*.err
+*.log
