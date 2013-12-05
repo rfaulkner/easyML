@@ -3,6 +3,7 @@ Class family for Model IO classes to handle read/write of learning models
 """
 
 import redis
+from hashlib import sha1
 
 
 class ModelIO(object):
@@ -19,7 +20,7 @@ class ModelIO(object):
 
     def genkey(self, model):
         """ Generates a key from the model. Presumes model is valid. """
-        return str(model)
+        return sha1(str(model).encode('utf-8')).hexdigest()
 
     def package(self, model):
         """ Prepares the model for writing. """
