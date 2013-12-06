@@ -18,6 +18,7 @@ apt-get install -y vim
 apt-get install -y vim
 apt-get install -y redis-server
 apt-get install -y python-redis
+apt-get install -y curl
 
 
 #   Hadoop Packages
