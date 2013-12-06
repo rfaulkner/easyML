@@ -12,8 +12,8 @@ Setup
 
 To get the app running:
 
-    $ cd {%PROJECT HOME%}
-    $ cp src/config/settings.py.example src/config/settings.py
+    $ git clone https://github.com/rfaulkner/versus.git
+    $ cd versus
     $ sudo pip install -e .
     $ python src/web/run.py
 
