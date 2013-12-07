@@ -13,12 +13,19 @@ ln -fs /vagrant /var/www
 #   ---------------
 
 apt-get install -y git
-apt-get install -y python-pip
 apt-get install -y vim
 apt-get install -y vim
 apt-get install -y redis-server
-apt-get install -y python-redis
 apt-get install -y curl
+
+
+#   Python Packages
+#   ---------------
+
+apt-get install -y python-dev
+apt-get install -y python-pip
+apt-get install -y python-numpy
+apt-get install -y python-redis
 
 
 #   Hadoop Packages
