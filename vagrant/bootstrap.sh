@@ -22,6 +22,7 @@ apt-get install -y curl
 #   Python Packages
 #   ---------------
 
+apt-get install -y gfortran libopenblas-dev liblapack-dev
 apt-get install -y python-dev
 apt-get install -y python-pip
 apt-get install -y python-numpy
