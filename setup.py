@@ -16,7 +16,13 @@ setup(
     url='http://www.github.com/rfaulkner/test',
     author="Ryan Faulkner",
     author_email="bobs.ur.uncle@gmail.com",
-    packages=['test.src', 'test.config'],
+    packages=[
+        'versus.src',
+        'versus.src.web',
+        'versus.config',
+        'versus.tools',
+        'versus'
+        ],
     install_requires=[
         'Flask == 0.9',
         'python-dateutil >= 2.1',
