@@ -37,7 +37,6 @@ nosetests.xml
 .pydevproject
 
 # Project dependencies to ignore
-settings.py
 vagrant/.vagrant
 *.err
 *.log
