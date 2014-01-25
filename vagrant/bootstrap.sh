@@ -16,7 +16,6 @@ apt-get install -y g++
 
 apt-get install -y git
 apt-get install -y vim
-apt-get install -y vim
 apt-get install -y redis-server
 apt-get install -y curl
 
