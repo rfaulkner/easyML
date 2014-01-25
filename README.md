@@ -15,7 +15,7 @@ To get the app running:
     $ git clone https://github.com/rfaulkner/versus.git
     $ cd versus
     $ sudo pip install -e .
-    $ python src/web/run.py
+    $ python versus/src/web/run.py
 
 Hosting can be accessed via the endpoint http://127.0.0.1:5000.
 
