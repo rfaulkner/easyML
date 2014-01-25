@@ -1,6 +1,6 @@
 __author__ = 'rfaulk'
 
-from test.config import settings
+from versus.config import settings
 from flask import Flask
 
 # Instantiate flask app

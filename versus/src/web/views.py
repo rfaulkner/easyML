@@ -2,18 +2,18 @@
 Module implementing the view portion of the MVC pattern.
 """
 
-from test.src import logging
-from test.config import settings
+from versus.src import logging
+from versus.config import settings
 
 __author__ = settings.AUTHORS
 __date__ = "2013-08-20"
 __license__ = settings.LICENSE
 
-from flask import Flask, render_template, Markup, redirect, url_for, \
-    request, escape, flash, jsonify, make_response
+from flask import render_template, redirect, url_for, \
+    request, escape, flash
 
-from test.src.web.session import APIUser
-from test.src.web import app
+from versus.src.web.session import APIUser
+from versus.src.web import app
 
 # Flask Login views
 
