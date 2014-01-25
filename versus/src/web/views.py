@@ -2,8 +2,7 @@
 Module implementing the view portion of the MVC pattern.
 """
 
-from versus.src import logging
-from versus.config import settings
+from versus.config import settings, logging
 
 __author__ = settings.AUTHORS
 __date__ = "2013-08-20"
