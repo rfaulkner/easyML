@@ -15,9 +15,10 @@ To get the app running:
     ~ $ git clone https://github.com/rfaulkner/versus.git
     ~ $ cd versus
     ~ $ sudo pip install -e .
-    ~ $ python versus/src/web/run.py
+    ~ $ ./versus/src/web/run.py [OPTS]
 
-Hosting can be accessed via the endpoint http://127.0.0.1:5000.
+Hosting can be accessed via the endpoint http://127.0.0.1:5000.  Note, flasklogin is assumed not to be installed
+by default and so authentication will not be automatically activated (see versus/config/settings.py).
 
 For apache setup see - http://flask.pocoo.org/docs/deploying/mod_wsgi/.
 
