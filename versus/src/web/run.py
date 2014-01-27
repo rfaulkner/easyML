@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
@@ -68,16 +68,12 @@ def parseargs():
 
     """
     parser = argparse.ArgumentParser(
-        description="This script serves as the entry point for git deploy.",
+        description="This script serves as the entry point for flask.",
         epilog="",
         conflict_handler="resolve",
-        usage="git-deploy method [remote] [branch]"
-              "\n\t[-q --quiet] \n\t[-s --silent] "
-              "\n\t[-d --debug] \n\t[-c --count [0-9]+] \n\t[-f --force] "
-              "\n\t[-t --tag] \n\t[-a --auto_sync] "
-              "\n\t[-y --sync SCRIPT NAME] "
-              "\n\nmethod=[start|sync|abort|revert|diff|show_tag|"
-              "log_deploys|finish]"
+        usage="run.py [OPTS]"
+              "\n\t[-q --quiet] \n\t[-s --silent] \n\t[-v --verbose]"
+              "\n\t[-d --debug] \n\t[-r --reloader]"
     )
 
     parser.allow_interspersed_args = False
@@ -89,10 +85,6 @@ def parseargs():
     }
 
     # Global options.
-    parser.add_argument('ordered_args', metavar='ordered_args', type=str,
-                        nargs='+', help='Specifies the git deploy method and '
-                                        'additional args depending on the '
-                                        'method called.')
     parser.add_argument("-c", "--count",
                         default=1, type=int,
                         help="number of tags to log")
