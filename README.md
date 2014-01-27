@@ -17,8 +17,7 @@ To get the app running:
     ~ $ sudo pip install -e .
     ~ $ ./versus/src/web/run.py [OPTS]
 
-Hosting can be accessed via the endpoint http://127.0.0.1:5000.  Note, flasklogin is assumed not to be installed
-by default and so authentication will not be automatically activated (see versus/config/settings.py).
+Hosting can be accessed via the endpoint http://127.0.0.1:5000.
 
 For apache setup see - http://flask.pocoo.org/docs/deploying/mod_wsgi/.
 

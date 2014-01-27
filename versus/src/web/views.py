@@ -17,65 +17,55 @@ from versus.src.web import app
 
 # Flask Login views
 
-if settings.__flask_login_exists__:
+from versus.src.web.session import APIUser
 
-    from versus.src.web.session import APIUser
+from flask.ext.login import login_required, logout_user, \
+    confirm_login, login_user, fresh_login_required, current_user
 
-    from flask.ext.login import login_required, logout_user, \
-        confirm_login, login_user, fresh_login_required, current_user
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST' and 'username' in request.form:
 
-    @app.route('/login', methods=['GET', 'POST'])
-    def login():
-        if request.method == 'POST' and 'username' in request.form:
+        username = escape(unicode(str(request.form['username'])))
+        passwd = escape(unicode(str(request.form['password'])))
+        remember = request.form.get('remember', 'no') == 'yes'
 
-            username = escape(unicode(str(request.form['username'])))
-            passwd = escape(unicode(str(request.form['password'])))
-            remember = request.form.get('remember', 'no') == 'yes'
+        # Initialize user
+        user_ref = APIUser(username)
+        user_ref.authenticate(passwd)
 
-            # Initialize user
-            user_ref = APIUser(username)
-            user_ref.authenticate(passwd)
+        log.debug(__name__ + ' :: Authenticating "{0}"/"{1}" ...'.
+            format(username, passwd))
 
-            log.debug(__name__ + ' :: Authenticating "{0}"/"{1}" ...'.
-                format(username, passwd))
+        if user_ref.is_authenticated():
+            login_user(user_ref, remember=remember)
+            flash('Logged in.')
+            return redirect(request.args.get('next')
+                            or url_for('api_root'))
+        else:
+            flash('Login failed.')
+    return render_template('login.html')
 
-            if user_ref.is_authenticated():
-                login_user(user_ref, remember=remember)
-                flash('Logged in.')
-                return redirect(request.args.get('next')
-                                or url_for('api_root'))
-            else:
-                flash('Login failed.')
-        return render_template('login.html')
+@app.route('/reauth', methods=['GET', 'POST'])
+@login_required
+def reauth():
+    if request.method == 'POST':
+        confirm_login()
+        flash(u'Reauthenticated.')
+        return redirect(request.args.get('next') or url_for('api_root'))
+    return render_template('reauth.html')
 
-    @app.route('/reauth', methods=['GET', 'POST'])
-    @login_required
-    def reauth():
-        if request.method == 'POST':
-            confirm_login()
-            flash(u'Reauthenticated.')
-            return redirect(request.args.get('next') or url_for('api_root'))
-        return render_template('reauth.html')
-
-    @app.route('/logout')
-    def logout():
-        logout_user()
-        flash('Logged out.')
-        return redirect(url_for('api_root'))
-
-else:
-
-    def login_required(f):
-        """ Does Nothing."""
-        def wrap(*args, **kwargs):
-            f(*args, **kwargs)
-        return wrap()
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash('Logged out.')
+    return redirect(url_for('api_root'))
 
 
 def home():
     """ View for root url - API instructions """
 
-    if settings.__flask_login_exists__ and current_user.is_anonymous():
+    if current_user.is_anonymous():
         return render_template('index_anon.html')
     else:
         return render_template('index.html')
@@ -131,10 +121,9 @@ views_with_anonymous_access = [
 
 # Apply decorators to views
 def init_views():
-    if settings.__flask_login_exists__:
-        for key in view_list:
-            if key not in views_with_anonymous_access:
-                view_list[key] = login_required(view_list[key])
+    for key in view_list:
+        if key not in views_with_anonymous_access:
+            view_list[key] = login_required(view_list[key])
 
     for key in route_deco:
         route = route_deco[key]

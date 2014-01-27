@@ -55,10 +55,8 @@ if not app.debug:
     '''))
     app.logger.addHandler(mail_handler)
 
-# With the presence of flask.ext.login module
-if settings.__flask_login_exists__:
-    from versus.src.web.session import login_manager
-    login_manager.setup_app(app)
+from versus.src.web.session import login_manager
+login_manager.setup_app(app)
 
 
 def parseargs():

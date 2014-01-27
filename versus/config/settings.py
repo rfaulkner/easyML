@@ -1,5 +1,4 @@
 
-__flask_login_exists__ = False
 __secret_key__ = 'none'
 __version__ = '0.0.1'
 
