@@ -25,6 +25,7 @@ setup(
         ],
     install_requires=[
         'Flask == 0.9',
+        'Flask-Login == 0.2.6',
         'python-dateutil >= 2.1',
         'numpy >= 1.8.0',
         'theano >= 0.6.0rc1',
