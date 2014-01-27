@@ -13,12 +13,13 @@ from versus.config import log
 from flask import render_template, redirect, url_for, \
     request, escape, flash
 
-from versus.src.web.session import APIUser
 from versus.src.web import app
 
 # Flask Login views
 
 if settings.__flask_login_exists__:
+
+    from versus.src.web.session import APIUser
 
     from flask.ext.login import login_required, logout_user, \
         confirm_login, login_user, fresh_login_required, current_user
