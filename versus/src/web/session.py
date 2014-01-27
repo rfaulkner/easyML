@@ -12,7 +12,8 @@ __author__ = {
 __date__ = "2013-03-21"
 __license__ = "GPL (version 2 or later)"
 
-from versus.config import settings, logging
+from versus.config import settings
+from versus.src.web.run import log
 
 # API User Authentication
 # #######################
@@ -51,7 +52,7 @@ if settings.__flask_login_exists__:
                 self.active = False
                 self.pw_hash = None
 
-            logging.debug(__name__ + ' :: Initiatializing user obj. '
+            log.debug(__name__ + ' :: Initiatializing user obj. '
                                      'user: "{0}", '
                                      'is active: "{1}", '
                                      'is auth: {2}'.
@@ -65,7 +66,7 @@ if settings.__flask_login_exists__:
 
         def authenticate(self, password):
             password = escape(unicode(password))
-            logging.debug(__name__ + ' :: Authenticating "{0}"/"{1}" '
+            log.debug(__name__ + ' :: Authenticating "{0}"/"{1}" '
                                      'on hash "{2}" ...'.
                 format(self.name, password, self.pw_hash))
             if self.check_password(password):
@@ -90,7 +91,7 @@ if settings.__flask_login_exists__:
                 password = escape(unicode(password))
                 self.pw_hash = generate_password_hash(password)
             except (TypeError, NameError) as e:
-                logging.error(__name__ + ' :: Hash set error - ' + e.message)
+                log.error(__name__ + ' :: Hash set error - ' + e.message)
                 self.pw_hash = None
 
         def check_password(self, password):
@@ -99,7 +100,7 @@ if settings.__flask_login_exists__:
                     password = escape(unicode(password))
                     return check_password_hash(self.pw_hash, password)
                 except (TypeError, NameError) as e:
-                    logging.error(__name__ +
+                    log.error(__name__ +
                                   ' :: Hash check error - ' + e.message)
                     return False
             else:
@@ -115,10 +116,10 @@ if settings.__flask_login_exists__:
             if not self.active:
                 if not get_user(self.name, by_id=False):
                     add_user(self.name, self.pw_hash)
-                    logging.debug(__name__ + ' :: Added user {0}'.
+                    log.debug(__name__ + ' :: Added user {0}'.
                         format(self.name))
                 else:
-                    logging.error(__name__ + 'Could not add user {0}'.
+                    log.error(__name__ + 'Could not add user {0}'.
                         format(self.name))
                 self.active = True
 

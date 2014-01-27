@@ -2,7 +2,7 @@
 Module implementing the view portion of the MVC pattern.
 """
 
-from versus.config import settings, logging
+from versus.config import settings
 
 __author__ = settings.AUTHORS
 __date__ = "2013-08-20"
@@ -13,6 +13,7 @@ from flask import render_template, redirect, url_for, \
 
 from versus.src.web.session import APIUser
 from versus.src.web import app
+from versus.src.web.run import log
 
 # Flask Login views
 
@@ -33,7 +34,7 @@ if settings.__flask_login_exists__:
             user_ref = APIUser(username)
             user_ref.authenticate(passwd)
 
-            logging.debug(__name__ + ' :: Authenticating "{0}"/"{1}" ...'.
+            log.debug(__name__ + ' :: Authenticating "{0}"/"{1}" ...'.
                 format(username, passwd))
 
             if user_ref.is_authenticated():
@@ -138,4 +139,4 @@ def init_views():
         view_method = view_list[key]
         view_list[key] = route(view_method)
 
-    logging.info(__name__ + ' :: Registered views - {0}'.format(str(view_list)))
+    log.info(__name__ + ' :: Registered views - {0}'.format(str(view_list)))
