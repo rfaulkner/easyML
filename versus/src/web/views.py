@@ -8,12 +8,13 @@ __author__ = settings.AUTHORS
 __date__ = "2013-08-20"
 __license__ = settings.LICENSE
 
+from versus.config import log
+
 from flask import render_template, redirect, url_for, \
     request, escape, flash
 
 from versus.src.web.session import APIUser
 from versus.src.web import app
-from versus.src.web.run import log
 
 # Flask Login views
 

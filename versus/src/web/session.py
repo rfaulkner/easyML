@@ -12,8 +12,8 @@ __author__ = {
 __date__ = "2013-03-21"
 __license__ = "GPL (version 2 or later)"
 
-from versus.config import settings
-from versus.src.web.run import log
+from versus.config import settings, log
+
 
 # API User Authentication
 # #######################

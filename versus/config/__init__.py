@@ -1,5 +1,21 @@
 import logging
 
+global log
+
+# NullHandler was added in Python 3.1.
+try:
+    NullHandler = logging.NullHandler
+except AttributeError:
+    class NullHandler(logging.Handler):
+        def emit(self, record):
+            pass
+
+# Add a do-nothing NullHandler to the module logger to prevent "No handlers
+# could be found" errors. The calling code can still add other, more useful
+# handlers, or otherwise configure logging.
+log = logging.getLogger(__name__)
+log.addHandler(NullHandler())
+
 
 def set_log(args, out, err):
     """
