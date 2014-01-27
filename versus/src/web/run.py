@@ -12,11 +12,13 @@
 
 """
 
-from versus.config import settings
+from versus.config import settings, set_log
 
 __author__ = settings.AUTHORS
 __date__ = "2013-08-20"
 __license__ = settings.LICENSE
+
+import argparse
 
 from versus.src.web import app
 from views import init_views
@@ -57,9 +59,65 @@ if settings.__flask_login_exists__:
     login_manager.setup_app(app)
 
 
+def parseargs():
+    """Parse command line arguments.
+
+    Returns *args*, the list of arguments left over after processing.
+
+    """
+    parser = argparse.ArgumentParser(
+        description="This script serves as the entry point for git deploy.",
+        epilog="",
+        conflict_handler="resolve",
+        usage="git-deploy method [remote] [branch]"
+              "\n\t[-q --quiet] \n\t[-s --silent] "
+              "\n\t[-d --debug] \n\t[-c --count [0-9]+] \n\t[-f --force] "
+              "\n\t[-t --tag] \n\t[-a --auto_sync] "
+              "\n\t[-y --sync SCRIPT NAME] "
+              "\n\nmethod=[start|sync|abort|revert|diff|show_tag|"
+              "log_deploys|finish]"
+    )
+
+    parser.allow_interspersed_args = False
+
+    defaults = {
+        "quiet": 0,
+        "silent": False,
+        "verbose": 1,
+    }
+
+    # Global options.
+    parser.add_argument('ordered_args', metavar='ordered_args', type=str,
+                        nargs='+', help='Specifies the git deploy method and '
+                                        'additional args depending on the '
+                                        'method called.')
+    parser.add_argument("-c", "--count",
+                        default=1, type=int,
+                        help="number of tags to log")
+    parser.add_argument("-q", "--quiet",
+                        default=defaults["quiet"], action="count",
+                        help="decrease the logging verbosity")
+    parser.add_argument("-s", "--silent",
+                        default=defaults["silent"], action="store_true",
+                        help="silence the logger")
+    parser.add_argument("-v", "--verbose",
+                        default=defaults["verbose"], action="count",
+                        help="increase the logging verbosity")
+    parser.add_argument("-d", "--debug",
+                        action="store_true",
+                        help="Run in flask debug mode.")
+    parser.add_argument("-r", "--reloader",
+                        action="store_true",
+                        help="Use flask reloader.")
+
+    args = parser.parse_args()
+    return args
+
+
 if __name__ == '__main__':
+    args = parseargs()
     init_views()
-    app.run(debug=True,
-        use_reloader=False,
-        host=settings.__instance_host__,
-        port=settings.__instance_port__,)
+    app.run(debug=args.debug,
+            use_reloader=args.reloader,
+            host=settings.__instance_host__,
+            port=settings.__instance_port__,)
