@@ -4,9 +4,9 @@ Logistic regression.
 
 import numpy
 
-import theano.config as config
+from theano import config
 import theano.tensor as T
-import theano.shared as shared
+from theano import shared
 
 
 class LogisticRegression(object):

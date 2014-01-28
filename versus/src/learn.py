@@ -2,20 +2,14 @@
 Module for learning source.
 """
 
-import cPickle
-import gzip
-import os
-import sys
-import time
 
-from rbm import RBM
 from logistic import LogisticRegression
 
 import numpy
 
-import theano.config as config
+from theano import config
 import theano.tensor as T
-import theano.shared as shared
+from theano import shared
 
 
 class HiddenLayer(object):

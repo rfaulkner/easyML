@@ -6,9 +6,7 @@ from learn import HiddenLayer
 from rbm import RBM
 
 import theano
-import theano.config as config
 import theano.tensor as T
-import theano.shared as shared
 
 from theano.tensor.shared_randomstreams import RandomStreams
 
