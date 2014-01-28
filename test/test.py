@@ -16,7 +16,7 @@ BATCH_SIZE = 50
 
 
 class TestLogistic(unittest.TestCase):
-    """ Test cases for GitDeploy initialization and config """
+    """ Test cases for Logistic model """
 
     def test_init(self):
 
@@ -45,3 +45,13 @@ class TestLogistic(unittest.TestCase):
             assert False
 
         assert cost == 0
+
+
+class TestRedis(unittest.TestCase):
+    """ Test cases for Redis read/writes """
+
+    def test_init(self):
+        assert False
+
+    def test_simple(self):
+        assert False
