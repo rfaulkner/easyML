@@ -39,7 +39,7 @@ class TestLogistic(unittest.TestCase):
 
         # construct the logistic regression class
         try:
-            classifier = LogisticRegression(_input=x.reshape((BATCH_SIZE , 28 * 28)), n_in=28 * 28, n_out=10)
+            classifier = LogisticRegression(x.reshape((BATCH_SIZE , 28 * 28)), 28 * 28, 10)
             cost = classifier.negative_log_likelihood(y)
         except Exception:
             assert False
