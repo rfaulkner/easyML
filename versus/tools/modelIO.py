@@ -3,6 +3,8 @@ Class family for Model IO classes to handle read/write of learning models
 """
 
 import redis
+import versus.tools.dataIO
+
 from hashlib import sha1
 
 
