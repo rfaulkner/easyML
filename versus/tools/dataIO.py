@@ -56,8 +56,7 @@ class DataIORedis(DataIO):
         self.db = kwargs['db'] if kwargs.has_key('db') else self.DEFAULT_DB
 
     def connect(self, **kwargs):
-        self.conn = redis.StrictRedis(host=self.host, port=self.port,
-                                      db=self.db)
+        self.conn = redis.Redis(host=self.host, port=self.port, db=self.db)
 
     def write(self, **kwargs):
         if self.conn:
