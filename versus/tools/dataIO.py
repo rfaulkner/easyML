@@ -10,6 +10,9 @@ class DataIO(object):
     def __init__(self, **kwargs):
         pass
 
+    def connect(self, **kwargs):
+        pass
+
     def write(self, **kwargs):
         raise NotImplementedError()
 
@@ -23,6 +26,9 @@ class DataIOHDFS(DataIO):
     def __init__(self, **kwargs):
         super(DataIOHDFS, self).__init__(**kwargs)
 
+    def connect(self, **kwargs):
+        raise NotImplementedError()
+
     def write(self, **kwargs):
         pass
 
@@ -35,6 +41,9 @@ class DataIORedis(DataIO):
 
     def __init__(self, **kwargs):
         super(DataIORedis, self).__init__(**kwargs)
+
+    def connect(self, **kwargs):
+        pass
 
     def write(self, **kwargs):
         pass
