@@ -20,6 +20,18 @@ apt-get install -y redis-server
 apt-get install -y curl
 
 
+#   MySQL
+#   -----
+
+apt-get install -y mysql-server
+apt-get install -y mysql-client
+
+# For now do this part manually
+
+# mysqladmin -u root -h localhost password '{%mysql_password%}'
+# mysqladmin -u root -h {%hostname%} password '{%mysql_password%}'
+
+
 #   Python Packages
 #   ---------------
 
