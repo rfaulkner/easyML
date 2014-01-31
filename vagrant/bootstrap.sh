@@ -5,6 +5,8 @@
 
 apt-get update
 apt-get install -y apache2
+apt-get install -y libapache2-mod-wsgi
+
 rm -rf /var/www
 ln -fs /vagrant /var/www
 apt-get install -y gfortran libopenblas-dev liblapack-dev
