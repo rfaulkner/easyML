@@ -3,8 +3,10 @@ Class family for Data IO classes to handle data ingestion and fetch events
 """
 
 import redis
-from sqlalchemy import create_engine
 from versus.config import log
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 
 class DataIO(object):
@@ -83,7 +85,10 @@ class DataIORedis(DataIO):
 
 
 class DataIOMySQL(DataIO):
-    """ Class implementing data IO for Redis. """
+    """ Class implementing data IO for MySQL. Utilizes sqlalchemy [1].
+
+     [1] http://docs.sqlalchemy.org
+    """
 
     DEFAULTS = {
         'dialect': 'mysql',
@@ -98,7 +103,8 @@ class DataIOMySQL(DataIO):
     def __init__(self, **kwargs):
         super(DataIOMySQL, self).__init__(**kwargs)
 
-        self.conn = None
+        self.engine = None
+        self.sess = None
 
         for key in self.DEFAULTS.keys():
             if kwargs.has_key(key):
@@ -125,10 +131,9 @@ class DataIOMySQL(DataIO):
                 self.host,
                 self.db,
             )
-        self.conn = create_engine(connect_str)
+        self.engine = create_engine(connect_str)
+        self.sess = sessionmaker(bind=self.engine)
 
-    def write(self, **kwargs):
-        pass
-
-    def read(self, **kwargs):
-        pass
+    @property
+    def session(self):
+        return self.sess
