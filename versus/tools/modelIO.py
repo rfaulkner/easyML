@@ -56,7 +56,7 @@ class ModelIORedis(ModelIO):
         dio_r = DataIORedis()
         dio_r.connect()
 
-        # Write the
+        # Write the model to redis
         if self.is_valid():
             return dio_r.write(key=self.genkey(),
                 value=self.package())
