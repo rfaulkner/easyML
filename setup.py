@@ -29,6 +29,8 @@ setup(
         'python-dateutil >= 2.1',
         'numpy >= 1.8.0',
         'theano >= 0.6.0rc1',
+        'redis >= 2.9.1',
+        'sqlalchemy >= 0.9.1',
         # MySQLdb is not in PyPi
     ],
     classifiers=[
