@@ -2,8 +2,9 @@
 Class family for Model IO classes to handle read/write of learning models
 """
 
-import redis
-import versus.tools.dataIO
+from versus.config import log
+from versus.tools.dataIO import DataIORedis
+import cPickle
 
 from hashlib import sha1
 
@@ -16,7 +17,7 @@ class ModelIO(object):
     def write(self, model):
         raise NotImplementedError()
 
-    def validate(self, model):
+    def is_valid(self, model):
         """ Ensures that the model is valid. """
         pass
 
@@ -35,9 +36,25 @@ class ModelIORedis(ModelIO):
     def __init__(self, **kwargs):
         super(ModelIORedis, self).__init__(**kwargs)
 
+    def package(self, model):
+        """ Prepares the model for writing. Pickle seriallization"""
+        return cPickle.dumps(model)
+
     def write(self, model):
+        """
+        Write a model to redis
+        """
 
-        pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
-        r = redis.Redis(connection_pool=pool)
+        dio_r = DataIORedis()
+        dio_r.connect()
 
-        r.set(self.genkey(model), self.package(model))
+        # Write the
+        if is_valid(model):
+            return dio_r.write(key=self.genkey(model),
+                value=self.package(model))
+        else:
+            log.error('Invalid model -> "{0}"'.format(str(model)))
+            return False
+
+    def read(self, hash):
+        pass
