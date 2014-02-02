@@ -39,8 +39,7 @@ apt-get install -y mysql-client
 
 apt-get install -y python-dev
 apt-get install -y python-pip
-apt-get install -y python-numpy
-apt-get install -y python-redis
+apt-get install -y python-numpy python-scipy
 
 
 #   Hadoop Packages
