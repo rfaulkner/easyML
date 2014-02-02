@@ -11,36 +11,44 @@ from hashlib import sha1
 
 class ModelIO(object):
 
-    def __init__(self, **kwargs):
-        pass
+    def __init__(self, model, **kwargs):
+        self._model = model
 
-    def write(self, model):
+    @property
+    def model(self):
+        return self._model
+
+    @model.setter
+    def model(self, value):
+        self._model = value
+
+    def write(self):
         raise NotImplementedError()
 
-    def is_valid(self, model):
+    def is_valid(self):
         """ Ensures that the model is valid. """
         raise NotImplementedError()
 
-    def genkey(self, model):
+    def genkey(self):
         """ Generates a key from the model. Presumes model is valid. """
-        return sha1(str(model).encode('utf-8')).hexdigest()
+        return sha1(str(self._model).encode('utf-8')).hexdigest()
 
-    def package(self, model):
+    def package(self):
         """ Prepares the model for writing. Pickle seriallization"""
-        return cPickle.dumps(model)
+        return cPickle.dumps(self._model)
 
 
 class ModelIORedis(ModelIO):
     """ Performs IO to redis. """
 
-    def __init__(self, **kwargs):
-        super(ModelIORedis, self).__init__(**kwargs)
+    def __init__(self, model, **kwargs):
+        super(ModelIORedis, self).__init__(model, **kwargs)
 
-    def is_valid(self, model):
+    def is_valid(self):
         # TODO - test to ensure model is "pickle-able"
         return True
 
-    def write(self, model):
+    def write(self):
         """
         Write a model to redis
         """
@@ -48,12 +56,12 @@ class ModelIORedis(ModelIO):
         dio_r = DataIORedis()
         dio_r.connect()
 
-        # Write the
-        if self.is_valid(model):
-            return dio_r.write(key=self.genkey(model),
-                value=self.package(model))
+        # Write the model to redis
+        if self.is_valid():
+            return dio_r.write(key=self.genkey(),
+                value=self.package())
         else:
-            log.error('Invalid model -> "{0}"'.format(str(model)))
+            log.error('Invalid model -> "{0}"'.format(str(self._model)))
             return False
 
     def read(self, hash):
