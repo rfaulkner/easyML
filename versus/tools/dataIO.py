@@ -3,6 +3,7 @@ Class family for Data IO classes to handle data ingestion and fetch events
 """
 
 import redis
+from sqlalchemy import create_engine
 from versus.config import log
 
 
@@ -79,3 +80,55 @@ class DataIORedis(DataIO):
         else:
             log.error('No redis connection.')
             return False
+
+
+class DataIOMySQL(DataIO):
+    """ Class implementing data IO for Redis. """
+
+    DEFAULTS = {
+        'dialect': 'mysql',
+        'driver': '',
+        'host': 'localhost',
+        'port': 3306,
+        'db': 'default',
+        'user': 'root',
+        'pass': '',
+    }
+
+    def __init__(self, **kwargs):
+        super(DataIOMySQL, self).__init__(**kwargs)
+
+        self.conn = None
+
+        for key in self.DEFAULTS.keys():
+            if kwargs.has_key(key):
+                setattr(self, key, kwargs[key])
+            else:
+                setattr(self, key, self.DEFAULTS[key])
+
+    def connect(self, **kwargs):
+        """ dialect+driver://username:password@host:port/database """
+        if self.driver:
+            connect_str = '{0}+{1}://{2}:{3}@{4}/{5}'.format(
+                self.dialect,
+                self.driver,
+                self.user,
+                self.pwrd,
+                self.host,
+                self.db,
+            )
+        else:
+            connect_str = '{0}://{1}:{2}@{3}/{4}'.format(
+                self.dialect,
+                self.user,
+                self.pwrd,
+                self.host,
+                self.db,
+            )
+        self.conn = create_engine(connect_str)
+
+    def write(self, **kwargs):
+        pass
+
+    def read(self, **kwargs):
+        pass
