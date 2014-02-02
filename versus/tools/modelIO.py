@@ -19,15 +19,15 @@ class ModelIO(object):
 
     def is_valid(self, model):
         """ Ensures that the model is valid. """
-        pass
+        raise NotImplementedError()
 
     def genkey(self, model):
         """ Generates a key from the model. Presumes model is valid. """
         return sha1(str(model).encode('utf-8')).hexdigest()
 
     def package(self, model):
-        """ Prepares the model for writing. """
-        return model
+        """ Prepares the model for writing. Pickle seriallization"""
+        return cPickle.dumps(model)
 
 
 class ModelIORedis(ModelIO):
@@ -36,9 +36,9 @@ class ModelIORedis(ModelIO):
     def __init__(self, **kwargs):
         super(ModelIORedis, self).__init__(**kwargs)
 
-    def package(self, model):
-        """ Prepares the model for writing. Pickle seriallization"""
-        return cPickle.dumps(model)
+    def is_valid(self, model):
+        # TODO - test to ensure model is "pickle-able"
+        return True
 
     def write(self, model):
         """
@@ -49,7 +49,7 @@ class ModelIORedis(ModelIO):
         dio_r.connect()
 
         # Write the
-        if is_valid(model):
+        if self.is_valid(model):
             return dio_r.write(key=self.genkey(model),
                 value=self.package(model))
         else:
