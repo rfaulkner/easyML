@@ -9,6 +9,14 @@ import theano.tensor as T
 from theano import shared
 
 
+def decode(self, encoding):
+    """ Decode an encoded model.
+
+    :return: LogisticRegression with encodings parameters
+    """
+    pass
+
+
 class LogisticRegression(object):
     """Multi-class Logistic Regression Class
 
@@ -53,6 +61,12 @@ class LogisticRegression(object):
 
         # parameters of the model
         self.params = [self.W, self.b]
+
+
+    def encode(self):
+        """ Encode the parameters of the model """
+        pass
+
 
     def negative_log_likelihood(self, y):
         """Return the mean of the negative log-likelihood of the prediction
