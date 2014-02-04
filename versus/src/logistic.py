@@ -60,13 +60,20 @@ class LogisticRegression(object):
         self.y_pred = T.argmax(self.p_y_given_x, axis=1)
 
         # parameters of the model
-        self.params = [self.W, self.b]
+        self._params = [self.W, self.b]
 
 
     def encode(self):
         """ Encode the parameters of the model """
         pass
 
+    @property
+    def params(self):
+        return self._params
+
+    @params.setter
+    def params(self, value):
+        self._params = value
 
     def negative_log_likelihood(self, y):
         """Return the mean of the negative log-likelihood of the prediction
