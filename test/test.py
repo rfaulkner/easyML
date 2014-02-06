@@ -67,7 +67,7 @@ class TestRedis(unittest.TestCase):
 
         if not (dior.read(key='try') == 1):
             assert False
-            
+
         del dior
         assert True
 
