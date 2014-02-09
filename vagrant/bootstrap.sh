@@ -40,7 +40,7 @@ apt-get install -y mysql-client
 apt-get install -y python-dev
 apt-get install -y python-pip
 apt-get install -y python-numpy python-scipy
-
+apt-get install -y python-pydoop
 
 #   Hadoop Packages
 #   ---------------
