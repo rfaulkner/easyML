@@ -25,9 +25,15 @@ def set_log(args, out, err):
     :param out: stdout
     :param err: stderr
     """
-    level = logging.WARNING - ((args.verbose - args.quiet) * 10)
-    if args.silent:
-        level = logging.CRITICAL + 1
+
+    # Default to info if args not present
+    if hasattr(args, 'verbose') and hasattr(
+        args, 'silent') and hasattr(args, 'quiet'):
+        level = logging.WARNING - ((args.verbose - args.quiet) * 10)
+        if args.silent:
+            level = logging.CRITICAL + 1
+    else:
+        level = logging.INFO
 
     log_format = "%(asctime)s %(levelname)-8s %(message)s"
     handler = logging.StreamHandler(err)
