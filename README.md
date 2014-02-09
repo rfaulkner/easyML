@@ -5,6 +5,8 @@ Interesting ways of mixing human collaboration with Machine Learning.  This proj
 to dynamically train deep neural networks for production environments.  Theano optimizes and simplifies training over
 deep models.
 
+The project exposes a web interface via Python's Flask package for data ingestion.
+
 [1] http://deeplearning.net/software/theano/
 
 Setup
@@ -49,7 +51,28 @@ From a (L)UNIX box
 From this point follow the setup commands above.
 
 
+Setup mod_wsgi for Flask
+------------------------
+
+To setup Flask to run with mod_wsgi add this virtualhost to [2]:
+
+    <VirtualHost *>
+        ServerName {% [ip|url] %}
+
+        WSGIDaemonProcess flask_ml user=user1 group=group1 threads=5
+        WSGIScriptAlias / /path/to/app.wsgi
+
+        <Directory /var/www/flask_ml>
+            WSGIProcessGroup flask_ml
+            WSGIApplicationGroup %{GLOBAL}
+            Order deny,allow
+            Allow from all
+        </Directory>
+    </VirtualHost>
+
+
 References
 ----------
 
 [1] http://www.vagrantbox.es
+[2] http://flask.pocoo.org/docs/deploying/mod_wsgi/
