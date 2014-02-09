@@ -64,5 +64,7 @@ class ModelIORedis(ModelIO):
             log.error('Invalid model -> "{0}"'.format(str(self._model)))
             return False
 
-    def read(self, hash):
-        pass
+    def read(self, key):
+        dio_r = DataIORedis()
+        dio_r.connect()
+        return dio_r.read(key=key)
