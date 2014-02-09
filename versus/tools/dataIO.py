@@ -5,6 +5,8 @@ Class family for Data IO classes to handle data ingestion and fetch events
 import redis
 from versus.config import log
 
+import pydoop.hdfs as hdfs
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -34,7 +36,8 @@ class DataIOHDFS(DataIO):
         raise NotImplementedError()
 
     def write(self, **kwargs):
-        pass
+        """HDFS put for adding data to hdfs"""
+        hdfs.put(kwargs['fs'], kwargs['hdfs'])
 
     def read(self, **kwargs):
         pass
