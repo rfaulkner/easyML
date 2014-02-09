@@ -12,7 +12,7 @@
 
 """
 
-from versus.config import settings, set_log, log
+from versus.config import settings, set_log
 
 __author__ = settings.AUTHORS
 __date__ = "2013-08-20"
