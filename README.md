@@ -99,7 +99,12 @@ References
 ----------
 
 [1] http://deeplearning.net/software/theano/
+
 [2] http://getbootstrap.com/javascript/
-[2] http://www.vagrantbox.es
-[3] http://flask.pocoo.org/docs/deploying/mod_wsgi/
-[4] https://docs.vagrantup.com/v2/networking/forwarded_ports.html
+
+[3] http://www.vagrantbox.es
+
+[4] http://flask.pocoo.org/docs/deploying/mod_wsgi/
+
+[5] https://docs.vagrantup.com/v2/networking/forwarded_ports.html
+
