@@ -119,3 +119,9 @@ if __name__ == '__main__':
             use_reloader=args.reloader,
             host=settings.__instance_host__,
             port=settings.__instance_port__,)
+
+else:
+    # Invocation by apache mod_wsgi
+    log = set_log('', sys.stdout, sys.stderr)
+    init_views()
+
