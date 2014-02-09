@@ -7,27 +7,33 @@ deep models.
 
 The project exposes a web interface via Python's Flask package for data ingestion.
 
-[1] http://deeplearning.net/software/theano/
 
 Setup
 -----
 
 To get the app running:
 
-    ~ $ git clone https://github.com/rfaulkner/versus.git
+    ~ $ git clone https://github.com/rfaulkner/easyML.git
     ~ $ cd versus
     ~ $ sudo pip install -e .
     ~ $ ./versus/src/web/run.py [OPTS]
 
-Hosting can be accessed via the endpoint http://127.0.0.1:5000.
+Hosting from Flask can be accessed via the endpoint http://127.0.0.1:5000.
 
 For apache setup see - http://flask.pocoo.org/docs/deploying/mod_wsgi/.
+
+
+Frontend
+--------
+
+There is a basic front-end supported by Flask that can be used for data ingestion.  See "Setup mod_wsgi for Flask" below.
+Styling utilizes bootstrap.js [2]; the libs are in $PROJECT_HOME/versus/src/web/static.
 
 
 Vagrant Initialization
 ----------------------
 
-The default vagrant instance includes the following in addition to the vagrant "precise32" [1] Ubuntu image:
+The default vagrant instance includes the following in addition to the vagrant "precise32" [3] Ubuntu image:
 
     gfortran
     g++
@@ -54,7 +60,7 @@ From this point follow the setup commands above.
 Setup mod_wsgi for Flask
 ------------------------
 
-To setup Flask to run with mod_wsgi add this virtualhost to [2]:
+To setup Flask to run with mod_wsgi add this virtualhost to [4]:
 
     <VirtualHost *>
         ServerName {% [ip|url] %}
@@ -70,9 +76,30 @@ To setup Flask to run with mod_wsgi add this virtualhost to [2]:
         </Directory>
     </VirtualHost>
 
+You can find a template for the config file in $PROJECT_ROOT/vagrant/vhost.conf.  You may want to modify the config
+to suit your own environment however, the default process:
+
+    ~ $ cp /home/vagrant/easyML/vagrant/vhost.conf $HTTPD_ROOT/sites-available
+    ~ $ mv $HTTPD_ROOT/sites-available/vhost.conf $HTTPD_ROOT/sites-available/flask-easyML
+    ~ $ cp ln -s $HTTPD_ROOT/sites-available/flask_easyML $HTTPD_ROOT/sites-enabled/flask-easyML
+    ~ $ sudo a2ensite flask-easyML
+    ~ $ sudo apache2ctl restart
+
+You can curl the host to ensure that it's functioning properly\*:
+
+    ~ $ curl http://localhost:8080/
+
+If there are issues check the logs in $PROJECT_ROOT/logs.
+
+(\*) That by default for this project Vagrant is setup to forward port 80 in the VM to 4567 on the host machine.  If you
+want to use a different port in your apache setup you'll need to ensure that it's also forwarded [5].
+
 
 References
 ----------
 
-[1] http://www.vagrantbox.es
-[2] http://flask.pocoo.org/docs/deploying/mod_wsgi/
+[1] http://deeplearning.net/software/theano/
+[2] http://getbootstrap.com/javascript/
+[2] http://www.vagrantbox.es
+[3] http://flask.pocoo.org/docs/deploying/mod_wsgi/
+[4] https://docs.vagrantup.com/v2/networking/forwarded_ports.html
