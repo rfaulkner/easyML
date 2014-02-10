@@ -40,8 +40,10 @@ class DataIOHDFS(DataIO):
         hdfs.put(kwargs['fs'], kwargs['hdfs'])
 
     def read(self, **kwargs):
-        pass
+        return hdfs.get(kwargs['hdfs_path'], kwargs['local_path'])
 
+    def list(self, **kwargs):
+        return hdfs.ls(kwargs['hdfs_path'], recursive=kwargs['recursive'])
 
 class DataIORedis(DataIO):
     """ Class implementing data IO for Redis. """
