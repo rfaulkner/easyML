@@ -42,20 +42,5 @@ apt-get install -y python-pip
 apt-get install -y python-numpy python-scipy
 apt-get install -y python-pydoop
 
-#   Hadoop Packages
-#   ---------------
-
 apt-get -y install software-properties-common
 apt-get -y install python-software-properties
-
-add-apt-repository ppa:webupd8team/java
-apt-get -y update && sudo apt-get upgrade
-apt-get -y install oracle-java7-installer
-
-# Setup hadoop user
-sudo addgroup hadoop
-sudo adduser --ingroup hadoop hduser
-
-add-apt-repository ppa:hadoop-ubuntu/stable
-apt-get -y update && sudo apt-get upgrade
-apt-get -y install hadoop
