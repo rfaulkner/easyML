@@ -54,7 +54,13 @@ From a (L)UNIX box
     ~ $ vagrant up
     ~ $ vagrant ssh
 
-From this point follow the setup commands above.
+From this point follow setup commands above.  Once that is complete setup Hadoop.  Run the script below and follow the
+instructions when prompted:
+
+    ~ $ ./easyML/vagrant/setup_hadoop.sh
+    ~ $ sudo visudo
+
+In your sudoers file add "hduser ALL=(ALL:ALL) ALL".
 
 
 Setup mod_wsgi for Flask
