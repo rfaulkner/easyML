@@ -14,3 +14,10 @@ def add_user(user_handle, pass_hash):
     2. Store in DB
     """
     pass
+
+
+def ingest_main_input():
+    """
+    Handles ingest text and label data into hdfs
+    """
+    pass
