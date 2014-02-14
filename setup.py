@@ -31,6 +31,7 @@ setup(
         'theano >= 0.6.0rc1',
         'redis >= 2.9.1',
         'sqlalchemy >= 0.9.1',
+        'pydoop >= 0.10.0',
         # MySQLdb is not in PyPi
     ],
     classifiers=[
