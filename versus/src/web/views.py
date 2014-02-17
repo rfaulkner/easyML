@@ -82,6 +82,13 @@ def contact():
 def version():
     return render_template('version.html', version=settings.__version__)
 
+def ingest():
+    """
+    Handles form data ingestion.
+    """
+    # redirect to home with a message
+    # return render_template('about.html')
+
 # Decorate
 
 # Add View Decorators
