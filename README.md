@@ -101,6 +101,12 @@ If there are issues check the logs in $PROJECT_ROOT/logs.
 want to use a different port in your apache setup you'll need to ensure that it's also forwarded [5].
 
 
+Setup Hadoop
+------------
+
+Follow the instructions found in vagrant/hadoop/README.
+
+
 References
 ----------
 
