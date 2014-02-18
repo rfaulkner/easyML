@@ -6,7 +6,7 @@ export HADOOP_HOME=/etc/hadoop
 # Set JAVA_HOME (we will also configure JAVA_HOME directly for Hadoop later on)`
 # !! WARNING - Ensure this matches your install
 
-export JAVA_HOME=/usr/lib/jvm/java-6-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk
 
 # Some convenient aliases and functions for running Hadoop-related commands
 
