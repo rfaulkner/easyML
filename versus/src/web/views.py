@@ -2,18 +2,18 @@
 Module implementing the view portion of the MVC pattern.
 """
 
+from versus.config import log
 from versus.config import settings
+from versus.src.web import app
+from versus.tools.dataIO import DataIOHDFS
+
+from flask import render_template, redirect, url_for, \
+    request, escape, flash
 
 __author__ = settings.AUTHORS
 __date__ = "2013-08-20"
 __license__ = settings.LICENSE
 
-from versus.config import log
-
-from flask import render_template, redirect, url_for, \
-    request, escape, flash
-
-from versus.src.web import app
 
 # Flask Login views
 
@@ -88,6 +88,13 @@ def ingest():
     """
     # redirect to home with a message
     # return render_template('about.html')
+
+    # Get form data
+    label = None
+    text = None
+
+    DataIOHDFS().write(label=label, text=text)
+
 
 # Decorate
 
