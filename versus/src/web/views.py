@@ -82,6 +82,7 @@ def contact():
 def version():
     return render_template('version.html', version=settings.__version__)
 
+
 def ingest():
     """
     Handles form data ingestion.
@@ -89,11 +90,27 @@ def ingest():
     # redirect to home with a message
     # return render_template('about.html')
 
-    # Get form data
+    # TODO - Get form data
     label = None
     text = None
 
     DataIOHDFS().write(label=label, text=text)
+
+    # TODO - redirect
+
+
+def train():
+    """
+    Invoke training from control.
+    """
+
+    # TODO - Get form data
+    dataset = None
+    model_type = None
+
+    # TODO - given model type and data train a new model and store
+
+    # TODO - redirect
 
 
 # Decorate
