@@ -98,6 +98,7 @@ def ingest():
 
     return redirect(url_for('home'))
 
+
 def train():
     """
     Invoke training from control.
@@ -111,7 +112,6 @@ def train():
 
     return redirect(url_for('home'))
 
-# Decorate
 
 # Add View Decorators
 # ##
@@ -121,7 +121,9 @@ view_list = {
     home.__name__: home,
     about.__name__: about,
     contact.__name__: contact,
-    version.__name__: version
+    version.__name__: version,
+    ingest.__name__: ingest,
+    train.__name__: train,
 }
 
 # Dict stores routing paths for each view
@@ -139,8 +141,8 @@ route_deco = {
     about.__name__: app.route('/about/'),
     contact.__name__: app.route('/contact/'),
     version.__name__: app.route('/version'),
-    ingest.__name__: app.route('/ingest'),
-    train.__name__: app.route('/train')
+    ingest.__name__: app.route('/ingest', methods=['GET', 'POST']),
+    train.__name__: app.route('/train', methods=['GET', 'POST'])
 }
 
 # Dict stores flag for login required on view
