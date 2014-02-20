@@ -16,3 +16,5 @@ ADMINS = {
 }
 
 USERS = {}
+
+FLASK_LOG = '/var/log/flask.log'

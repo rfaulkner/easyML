@@ -122,6 +122,20 @@ if __name__ == '__main__':
 
 else:
     # Invocation by apache mod_wsgi
-    log = set_log('', sys.stdout, sys.stderr)
+
+    # Setup file logger
+    # TODO - ensure perms exist
+    from logging import FileHandler, Formatter
+    file_handler = FileHandler(settings.FLASK_LOG)
+
+    file_handler.setFormatter(Formatter(
+    '%(asctime)s %(levelname)s: %(message)s '
+    '[in %(pathname)s:%(lineno)d]'
+    ))
+
+    file_handler.setLevel(logging.DEBUG)
+    app.logger.addHandler(file_handler)
+
+    # Initialize views
     init_views()
 
