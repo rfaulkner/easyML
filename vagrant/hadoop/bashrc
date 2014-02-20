@@ -1,7 +1,7 @@
 # Set Hadoop-related environment variables
 # !! WARNING - Ensure this matches your install
 
-export HADOOP_HOME=/etc/hadoop
+export HADOOP_HOME=/usr/lib/hadoop
 export HADOOP_VERSION=1.0.2
 
 # Set JAVA_HOME (we will also configure JAVA_HOME directly for Hadoop later on)`
