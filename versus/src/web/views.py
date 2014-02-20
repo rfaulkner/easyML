@@ -150,6 +150,8 @@ views_with_anonymous_access = [
     home.__name__,
     about.__name__,
     contact.__name__,
+    ingest.__name__,
+    train.__name__,
 ]
 
 # Apply decorators to views
