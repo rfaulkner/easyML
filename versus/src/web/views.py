@@ -96,8 +96,7 @@ def ingest():
 
     DataIOHDFS().write(label=label, text=text)
 
-    # TODO - redirect
-
+    return redirect(url_for('home'))
 
 def train():
     """
@@ -110,8 +109,7 @@ def train():
 
     # TODO - given model type and data train a new model and store
 
-    # TODO - redirect
-
+    return redirect(url_for('home'))
 
 # Decorate
 
@@ -140,7 +138,9 @@ route_deco = {
     home.__name__: app.route('/'),
     about.__name__: app.route('/about/'),
     contact.__name__: app.route('/contact/'),
-    version.__name__: app.route('/version')
+    version.__name__: app.route('/version'),
+    ingest.__name__: app.route('/ingest'),
+    train.__name__: app.route('/train')
 }
 
 # Dict stores flag for login required on view
