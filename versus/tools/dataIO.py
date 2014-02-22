@@ -35,15 +35,28 @@ class DataIOHDFS(DataIO):
     def connect(self, **kwargs):
         raise NotImplementedError()
 
-    def write(self, **kwargs):
+    def write(self, fs_path, hdfs_path):
         """HDFS put for adding data to hdfs"""
-        hdfs.put(kwargs['fs'], kwargs['hdfs'])
 
-    def read(self, **kwargs):
-        return hdfs.get(kwargs['hdfs_path'], kwargs['local_path'])
+        hdfs.put(fs_path, hdfs_path)
 
-    def list(self, **kwargs):
-        return hdfs.ls(kwargs['hdfs_path'], recursive=kwargs['recursive'])
+    def read(self, hdfs_path, local_path):
+        """
+        Get a file from HDFS
+
+        :param hdfs_path:
+        :param local_path:
+        """
+        return hdfs.get(hdfs_path, local_path)
+
+    def list(self, hdfs_path):
+        """
+        List hdfs path contents
+
+        :param hdfs_path:
+        """
+        return hdfs.ls(hdfs_path, recursive=True)
+
 
 class DataIORedis(DataIO):
     """ Class implementing data IO for Redis. """
