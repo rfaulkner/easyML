@@ -18,3 +18,4 @@ ADMINS = {
 USERS = {}
 
 FLASK_LOG = '/var/log/flask.log'
+HDFS_BUFFER_FILE = '/var/local/text_learn_buff'
