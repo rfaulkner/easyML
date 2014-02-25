@@ -90,10 +90,10 @@ In each of core-site.xml, hdfs-site.xml, and mapred-site.xml add the elements fo
 9. Formatting namenode and starting hadoop
 ==========================================
 
-Run:
+Run as 'hduser':
 
-    $ /etc/hadoop/bin/hadoop namenode -format
-    $ /etc/hadoop/bin/start-all.sh
+    $ sudo /usr/lib/hadoop/bin/hadoop namenode -format
+    $ sudo /usr/lib/hadoop/bin/start-all.sh
 
 Check that it's running:
 
