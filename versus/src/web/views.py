@@ -118,7 +118,7 @@ def train():
 
     # TODO - given model type and data train a new model and store
 
-    return redirect(url_for('home'))
+    return render_template('train.html')
 
 
 # Add View Decorators
