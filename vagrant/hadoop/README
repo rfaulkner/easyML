@@ -81,6 +81,7 @@ In /etc/hadoop/conf make the following changes:
 
 hadoop-env.sh:
 
+    export HADOOP_CLASSPATH=/usr/lib/hadoop
     export JAVA_HOME=/usr/lib/jvm/java-7-openjdk
 
 In each of core-site.xml, hdfs-site.xml, and mapred-site.xml add the elements found in the corresponding files in
