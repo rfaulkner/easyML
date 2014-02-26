@@ -5,7 +5,8 @@ Class family for Data IO classes to handle data ingestion and fetch events
 import redis
 from versus.config import log
 
-import pydoop.hdfs as hdfs
+# import pydoop.hdfs as hdfs
+import subprocess
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -35,19 +36,32 @@ class DataIOHDFS(DataIO):
     def connect(self, **kwargs):
         raise NotImplementedError()
 
-    def write(self, fs_path, hdfs_path):
+    def copy_from_local(self, fs_path, hdfs_path):
         """HDFS put for adding data to hdfs"""
+        cmd = 'hadoop fs -copyFromLocal {0} {1}'.format(
+            fs_path, hdfs_path
+        )
+        subprocess.Popen(cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        # hdfs.put(fs_path, hdfs_path)
 
-        hdfs.put(fs_path, hdfs_path)
-
-    def read(self, hdfs_path, local_path):
+    def copy_to_local(self, fs_path, hdfs_path):
         """
         Get a file from HDFS
 
+        :param fs_path:
         :param hdfs_path:
-        :param local_path:
         """
-        return hdfs.get(hdfs_path, local_path)
+        cmd = 'hadoop fs -copyToLocal {0} {1}'.format(
+            hdfs_path, fs_path
+        )
+        subprocess.Popen(cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        # return hdfs.get(hdfs_path, local_path)
 
     def list(self, hdfs_path):
         """
@@ -55,7 +69,14 @@ class DataIOHDFS(DataIO):
 
         :param hdfs_path:
         """
-        return hdfs.ls(hdfs_path, recursive=True)
+        cmd = 'hadoop fs -ls {0}'.format(
+            hdfs_path
+        )
+        proc = subprocess.Popen(cmd,
+            stdout=subprocess.PIPE,
+        )
+        # return
+        # return hdfs.ls(hdfs_path, recursive=True)
 
 
 class DataIORedis(DataIO):
