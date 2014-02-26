@@ -37,7 +37,12 @@ class DataIOHDFS(DataIO):
         raise NotImplementedError()
 
     def copy_from_local(self, fs_path, hdfs_path):
-        """HDFS put for adding data to hdfs"""
+        """
+        HDFS put for adding data to hdfs
+
+        :param fs_path:     local path
+        :param hdfs_path:   HDFS path
+        """
         cmd = 'hadoop fs -copyFromLocal {0} {1}'.format(
             fs_path, hdfs_path
         )
@@ -51,8 +56,8 @@ class DataIOHDFS(DataIO):
         """
         Get a file from HDFS
 
-        :param fs_path:
-        :param hdfs_path:
+        :param fs_path:     local path
+        :param hdfs_path:   HDFS path
         """
         cmd = 'hadoop fs -copyToLocal {0} {1}'.format(
             hdfs_path, fs_path
@@ -67,7 +72,9 @@ class DataIOHDFS(DataIO):
         """
         List hdfs path contents
 
-        :param hdfs_path:
+        :param hdfs_path:   HDFS path
+
+        :return: list of HDFS path contents line by line
         """
         cmd = 'hadoop fs -ls {0}'.format(
             hdfs_path
@@ -75,7 +82,7 @@ class DataIOHDFS(DataIO):
         proc = subprocess.Popen(cmd,
             stdout=subprocess.PIPE,
         )
-        # return
+        return [line.rstrip() for line in proc.stdout]
         # return hdfs.ls(hdfs_path, recursive=True)
 
 
