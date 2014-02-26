@@ -5,7 +5,8 @@ Class family for Data IO classes to handle data ingestion and fetch events
 import redis
 from versus.config import log
 
-import pydoop.hdfs as hdfs
+# import pydoop.hdfs as hdfs
+import subprocess
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -35,27 +36,54 @@ class DataIOHDFS(DataIO):
     def connect(self, **kwargs):
         raise NotImplementedError()
 
-    def write(self, fs_path, hdfs_path):
-        """HDFS put for adding data to hdfs"""
+    def copy_from_local(self, fs_path, hdfs_path):
+        """
+        HDFS put for adding data to hdfs
 
-        hdfs.put(fs_path, hdfs_path)
+        :param fs_path:     local path
+        :param hdfs_path:   HDFS path
+        """
+        cmd = 'hadoop fs -copyFromLocal {0} {1}'.format(
+            fs_path, hdfs_path
+        )
+        subprocess.Popen(cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        # hdfs.put(fs_path, hdfs_path)
 
-    def read(self, hdfs_path, local_path):
+    def copy_to_local(self, fs_path, hdfs_path):
         """
         Get a file from HDFS
 
-        :param hdfs_path:
-        :param local_path:
+        :param fs_path:     local path
+        :param hdfs_path:   HDFS path
         """
-        return hdfs.get(hdfs_path, local_path)
+        cmd = 'hadoop fs -copyToLocal {0} {1}'.format(
+            hdfs_path, fs_path
+        )
+        subprocess.Popen(cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        # return hdfs.get(hdfs_path, local_path)
 
     def list(self, hdfs_path):
         """
         List hdfs path contents
 
-        :param hdfs_path:
+        :param hdfs_path:   HDFS path
+
+        :return: list of HDFS path contents line by line
         """
-        return hdfs.ls(hdfs_path, recursive=True)
+        cmd = 'hadoop fs -ls {0}'.format(
+            hdfs_path
+        )
+        proc = subprocess.Popen(cmd,
+            stdout=subprocess.PIPE,
+        )
+        return [line.rstrip() for line in proc.stdout]
+        # return hdfs.ls(hdfs_path, recursive=True)
 
 
 class DataIORedis(DataIO):
