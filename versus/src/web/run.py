@@ -123,18 +123,21 @@ if __name__ == '__main__':
 else:
     # Invocation by apache mod_wsgi
 
-    # Setup file logger
+    # Setup file logger, flask context exceptions will be
+    # written to the handler
+    #
     # TODO - ensure perms exist
-    from logging import FileHandler, Formatter
-    file_handler = FileHandler(settings.FLASK_LOG)
 
-    file_handler.setFormatter(Formatter(
+    from logging import FileHandler, Formatter
+    log = FileHandler(settings.FLASK_LOG)
+
+    log.setFormatter(Formatter(
     '%(asctime)s %(levelname)s: %(message)s '
     '[in %(pathname)s:%(lineno)d]'
     ))
 
-    file_handler.setLevel(logging.DEBUG)
-    app.logger.addHandler(file_handler)
+    log.setLevel(logging.DEBUG)
+    app.logger.addHandler(log)
 
     # Initialize views
     init_views()
