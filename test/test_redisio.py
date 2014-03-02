@@ -29,17 +29,12 @@ class TestRedis(LocalTestCase):
         dior.connect()  # connect to local instance
 
         del dior
-        assert True
 
     def test_simple(self):
         dior = DataIORedis()
         dior.connect()  # connect to local instance
 
-        if not dior.write(key='try', value=1):
-            assert False
-
-        if not (dior.read(key='try') == 1):
-            assert False
+        self.assertTrue(dior.write(key='try', value=1))
+        self.assertTrue(dior.read(key='try') == 1)
 
         del dior
-        assert True

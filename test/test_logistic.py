@@ -28,17 +28,11 @@ class TestLogistic(LocalTestCase):
     """ Test cases for Logistic model """
 
     def test_init(self):
-
         # allocate symbolic variables for the data
         x = T.fmatrix()  # the data is presented as rasterized images (each being a 1-D row vector in x)
 
         # construct the logistic regression class
-        try:
-            LogisticRegression(_input=x.reshape((BATCH_SIZE , 28 * 28)), n_in=28 * 28, n_out=10)
-        except Exception:
-            assert False
-
-        assert True
+        LogisticRegression(_input=x.reshape((BATCH_SIZE , 28 * 28)), n_in=28 * 28, n_out=10)
 
     def test_negative_log_likelihood(self):
 
@@ -47,10 +41,7 @@ class TestLogistic(LocalTestCase):
         y = T.lvector()  # the labels are presented as 1D vector of [long int] labels
 
         # construct the logistic regression class
-        try:
-            classifier = LogisticRegression(x.reshape((BATCH_SIZE , 28 * 28)), 28 * 28, 10)
-            cost = classifier.negative_log_likelihood(y)
-        except Exception:
-            assert False
+        classifier = LogisticRegression(x.reshape((BATCH_SIZE , 28 * 28)), 28 * 28, 10)
+        cost = classifier.negative_log_likelihood(y)
 
         assert cost == 0
