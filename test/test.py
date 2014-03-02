@@ -10,6 +10,7 @@ dynamic_learn.testsuite
 import unittest
 import theano.tensor as T
 import tempfile
+import os
 
 from versus.src.logistic import LogisticRegression
 from versus.tools.dataIO import DataIORedis, DataIOHDFS
@@ -20,7 +21,7 @@ BATCH_SIZE = 50
 class LocalTestCase(unittest.TestCase):
 
     def setUp(self):
-        super(unittest.TestCase, self).setUp()
+        unittest.TestCase.setUp(self)
 
 
 class TestLogistic(unittest.TestCase):
@@ -83,7 +84,20 @@ class TestDataIOHDFS(unittest.TestCase):
     """ Test cases for HDFS IO """
 
     def test_copy_from_local(self):
-        assert False
+
+        tempdir = tempfile.mkdtemp()
+        handle, fullpath = tempfile.mkstemp(dir=tempdir)
+        hdfs_path = '/user/test'
+
+        io = DataIOHDFS()
+        io.copy_from_local(fullpath, hdfs_path)
+        filename = os.path.basename(fullpath)
+
+        exists_in_hdfs = False
+        for item in io.list(hdfs_path):
+            if str(item) == filename:
+                exists_in_hdfs = True
+        self.assertTrue(exists_in_hdfs)
 
     def test_copy_to_local(self):
         assert False
