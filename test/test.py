@@ -9,9 +9,10 @@ dynamic_learn.testsuite
 
 import unittest
 import theano.tensor as T
+import tempfile
 
 from versus.src.logistic import LogisticRegression
-from versus.tools.dataIO import DataIORedis
+from versus.tools.dataIO import DataIORedis, DataIOHDFS
 
 BATCH_SIZE = 50
 
@@ -72,3 +73,14 @@ class TestRedis(unittest.TestCase):
         assert True
 
 
+class TestDataIOHDFS(unittest.TestCase):
+    """ Test cases for HDFS IO """
+
+    def test_copy_from_local(self):
+        assert False
+
+    def test_copy_to_local(self):
+        assert False
+
+    def test_list(self):
+        assert False
