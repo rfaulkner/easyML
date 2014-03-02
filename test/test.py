@@ -17,6 +17,12 @@ from versus.tools.dataIO import DataIORedis, DataIOHDFS
 BATCH_SIZE = 50
 
 
+class LocalTestCase(unittest.TestCase):
+
+    def setUp(self):
+        super(unittest.TestCase, self).setUp()
+
+
 class TestLogistic(unittest.TestCase):
     """ Test cases for Logistic model """
 
