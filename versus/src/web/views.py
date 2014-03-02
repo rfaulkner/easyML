@@ -91,9 +91,9 @@ def ingest():
     # redirect to home with a message
     # return render_template('about.html')
 
-    # TODO - Get form data
-    label = None
-    text = None
+    label = request.form['phraseInput']
+    text = request.form['labelInput']
+    # model = request.form['modelInput']
 
     with open(HDFS_BUFFER_FILE, 'a') as f:
         # TODO - use control char as separator
