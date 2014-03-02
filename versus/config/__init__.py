@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 log.addHandler(NullHandler())
 
 
-def set_log(args, out, err):
+def set_log(args, out, err, level_override=None):
     """
     Configures a logger and returns it.
 
@@ -26,14 +26,17 @@ def set_log(args, out, err):
     :param err: stderr
     """
 
-    # Default to info if args not present
-    if hasattr(args, 'verbose') and hasattr(
-        args, 'silent') and hasattr(args, 'quiet'):
-        level = logging.WARNING - ((args.verbose - args.quiet) * 10)
-        if args.silent:
-            level = logging.CRITICAL + 1
+    if not level_override:
+        # Default to info if args not present
+        if hasattr(args, 'verbose') and hasattr(
+            args, 'silent') and hasattr(args, 'quiet'):
+            level = logging.WARNING - ((args.verbose - args.quiet) * 10)
+            if args.silent:
+                level = logging.CRITICAL + 1
+        else:
+            level = logging.INFO
     else:
-        level = logging.INFO
+        level = level_override
 
     log_format = "%(asctime)s %(levelname)-8s %(message)s"
     handler = logging.StreamHandler(err)
