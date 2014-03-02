@@ -19,12 +19,15 @@ BATCH_SIZE = 50
 
 
 class LocalTestCase(unittest.TestCase):
+    """
+    Setup relevant test context in this class
 
+    """
     def setUp(self):
         unittest.TestCase.setUp(self)
 
 
-class TestLogistic(unittest.TestCase):
+class TestLogistic(LocalTestCase):
     """ Test cases for Logistic model """
 
     def test_init(self):
@@ -56,7 +59,7 @@ class TestLogistic(unittest.TestCase):
         assert cost == 0
 
 
-class TestRedis(unittest.TestCase):
+class TestRedis(LocalTestCase):
     """ Test cases for Redis read/writes """
 
     def test_init(self):
@@ -80,7 +83,7 @@ class TestRedis(unittest.TestCase):
         assert True
 
 
-class TestDataIOHDFS(unittest.TestCase):
+class TestDataIOHDFS(LocalTestCase):
     """ Test cases for HDFS IO """
 
     def test_copy_from_local(self):
