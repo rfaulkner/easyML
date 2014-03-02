@@ -88,14 +88,16 @@ class TestDataIOHDFS(LocalTestCase):
 
     def test_copy_from_local(self):
 
+        io = DataIOHDFS()
+
+        # Create a file on HDFS
         tempdir = tempfile.mkdtemp()
         handle, fullpath = tempfile.mkstemp(dir=tempdir)
         hdfs_path = '/user/test'
-
-        io = DataIOHDFS()
         io.copy_from_local(fullpath, hdfs_path)
         filename = os.path.basename(fullpath)
 
+        # Check the hdfs path
         exists_in_hdfs = False
         for item in io.list(hdfs_path):
             if str(item) == filename:
@@ -103,7 +105,22 @@ class TestDataIOHDFS(LocalTestCase):
         self.assertTrue(exists_in_hdfs)
 
     def test_copy_to_local(self):
-        assert False
+
+        io = DataIOHDFS()
+
+        # Create a file on HDFS
+        tempdir = tempfile.mkdtemp()
+        handle, fullpath = tempfile.mkstemp(dir=tempdir)
+        hdfs_path = '/user/test'
+        io.copy_from_local(fullpath, hdfs_path)
+
+        # Copy back to the filesystem
+        tempdir = tempfile.mkdtemp()
+        handle, fullpath = tempfile.mkstemp(dir=tempdir)
+        io.copy_to_local(fullpath, hdfs_path)
+
+        self.assertTrue(os.path.exists(fullpath))
+
 
     def test_list(self):
-        assert False
+        raise NotImplementedError()
