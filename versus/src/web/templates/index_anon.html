@@ -11,15 +11,15 @@
 <form role="form" action="{{ url_for('ingest') }}" method=post>
     <div class="form-group">
         <label for="phraseInput">Say something:</label>
-        <input type="text" class="form-control" id="phraseInput" placeholder="Enter phrase">
+        <input name="phraseInput" type="text" class="form-control" id="phraseInput" placeholder="Enter phrase">
     </div>
     <div class="form-group">
         <label for="labelInput">Label it.</label>
-        <input type="text" class="form-control" id="labelInput" placeholder="Enter label">
+        <input name="labelInput" type="text" class="form-control" id="labelInput" placeholder="Enter label">
     </div>
     <div class="form-group">
         <label for="modelInput">Which model?</label>
-        <input type="text" class="form-control" id="modelInput" placeholder="Enter model">
+        <input name="modelInput" type="text" class="form-control" id="modelInput" placeholder="Enter model">
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
