@@ -29,3 +29,6 @@ MAX_BUFFER_SIZE = 1024
 
 HDFS_BUFFER_FILE = '/var/local/text_learn_buff'
 HDFS_STAGE = '/user/' + HADOOP_USER + '/stage'
+HDFS_IN = '/user/' + HADOOP_USER + '/input'
+HDFS_OUT = '/user/' + HADOOP_USER + '/output'
+HDFS_STORE = '/user/' + HADOOP_USER + '/archive'
