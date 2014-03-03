@@ -23,4 +23,9 @@ ADMINS = {
 USERS = {}
 
 FLASK_LOG = '/var/log/flask.log'
+
+HADOOP_USER = 'hduser'
+MAX_BUFFER_SIZE = 1024
+
 HDFS_BUFFER_FILE = '/var/local/text_learn_buff'
+HDFS_STAGE = '/user/' + HADOOP_USER + '/stage'

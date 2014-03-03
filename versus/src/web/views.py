@@ -2,9 +2,11 @@
 Module implementing the view portion of the MVC pattern.
 """
 
+import os
+
 from versus.config import log
 from versus.config.settings import AUTHORS, LICENSE, HDFS_BUFFER_FILE, \
-    __version__
+    __version__, HDFS_STAGE, MAX_BUFFER_SIZE
 from versus.src.web import app
 from versus.tools.dataIO import DataIOHDFS
 
@@ -99,10 +101,12 @@ def ingest():
         # TODO - use control char as separator
         f.write(str(label) + ':' + str(text) + '\n')
 
-        # TODO -
-        # if size of file >= max bytes:
-        #    hdfs_path = get_path()
-        #    DataIOHDFS().write(HDFS_BUFFER_FILE, hdfs_path)
+        # Flush the file to HDFS_STAGE if it exceeds MAX_BUFFER_SIZE
+        #   TODO - This should be done in a separate thread there'll
+        #   TODO - also need to be locking on the file
+        if (os.stat(HDFS_BUFFER_FILE).st_size >= MAX_BUFFER_SIZE):
+            DataIOHDFS().copy_from_local(HDFS_BUFFER_FILE, HDFS_STAGE)
+            os.remove(HDFS_BUFFER_FILE)
 
     return redirect(url_for('home'))
 
