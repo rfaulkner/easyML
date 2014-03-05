@@ -9,7 +9,9 @@ dynamic_learn.testsuite
 
 import unittest
 
-from versus.tools.dataIO import DataIORedis
+import versus.tools.dataIO as dio
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 
 class LocalTestCase(unittest.TestCase):
