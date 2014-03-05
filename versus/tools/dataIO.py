@@ -129,6 +129,17 @@ class DataIORedis(DataIO):
             log.error('No redis connection.')
             return False
 
+    def _del(self, **kwargs):
+        if self.conn:
+            try:
+                return self.conn.delete(kwargs['key'])
+            except KeyError as e:
+                log.error('Missing param -> {0}'.format(e.message))
+                return False
+        else:
+            log.error('No redis connection.')
+            return False
+
 
 class DataIOMySQL(DataIO):
     """ Class implementing data IO for MySQL. Utilizes sqlalchemy [1].
