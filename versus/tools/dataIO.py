@@ -36,6 +36,18 @@ class DataIOHDFS(DataIO):
     def connect(self, **kwargs):
         raise NotImplementedError()
 
+    def mkdir(self, hdfs_path):
+        """
+        HDFS mkdir
+
+        :param hdfs_path:   HDFS path
+        """
+        cmd = 'hadoop fs -mkdir {0}'.format(hdfs_path)
+        subprocess.Popen(cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+
     def copy_from_local(self, fs_path, hdfs_path):
         """
         HDFS put for adding data to hdfs
