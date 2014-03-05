@@ -48,6 +48,18 @@ class DataIOHDFS(DataIO):
             stderr=subprocess.PIPE
         )
 
+    def rmdir(self, hdfs_path):
+        """
+        HDFS recursive remove
+
+        :param hdfs_path:   HDFS path
+        """
+        cmd = 'hadoop fs -rm -r -skipTrash {0}'.format(hdfs_path)
+        subprocess.Popen(cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+
     def copy_from_local(self, fs_path, hdfs_path):
         """
         HDFS put for adding data to hdfs
