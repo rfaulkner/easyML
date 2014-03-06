@@ -178,7 +178,7 @@ class DataIOMySQL(DataIO):
         'port': 3306,
         'db': 'default',
         'user': 'root',
-        'pass': '',
+        'pwrd': '',
     }
 
     def __init__(self, **kwargs):
