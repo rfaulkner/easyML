@@ -168,7 +168,10 @@ class DataIORedis(DataIO):
 class DataIOMySQL(DataIO):
     """ Class implementing data IO for MySQL. Utilizes sqlalchemy [1].
 
-     [1] http://docs.sqlalchemy.org
+    Database and table schemas will be stored in versus/schema.  Modifications
+    to this schema will be persisted with sync
+
+    [1] http://docs.sqlalchemy.org
     """
 
     DEFAULTS = {
@@ -218,3 +221,39 @@ class DataIOMySQL(DataIO):
     @property
     def session(self):
         return self.sess
+
+    def create_table(self, table, columns, meta):
+        """
+        Method for table creation
+        """
+        raise NotImplementedError()
+
+    def fetch_rows(self, table, conditions):
+        """
+        Method to extract rows from database
+        """
+        raise NotImplementedError()
+
+    def insert_rows(self, table, values):
+        """
+        Method to insert rows in database
+        """
+        raise NotImplementedError()
+
+    def update_rows(self, table, values):
+        """
+        Method to update rows in database
+        """
+        raise NotImplementedError()
+
+    def delete(self, table, conditions):
+        """
+        Method to delete rows from database
+        """
+        raise NotImplementedError()
+
+    def sync_to_schema(self):
+        """
+        Reads the schema and ensures that it reflects the db
+        """
+        raise NotImplementedError()
