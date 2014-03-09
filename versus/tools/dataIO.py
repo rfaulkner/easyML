@@ -8,6 +8,7 @@ from versus.config import log
 # import pydoop.hdfs as hdfs
 import subprocess
 
+import MySQLdb as mysql
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -256,4 +257,11 @@ class DataIOMySQL(DataIO):
         """
         Reads the schema and ensures that it reflects the db
         """
+
+        # Extract existing schema
+        # Compare schema.sql
+        # add inserts.sql - schema/mysql.updates.sql
+        # updates.sql - schema/mysql.updates.sql
+        # deletes.sql - schema/mysql.updates.sql
+
         raise NotImplementedError()
