@@ -27,7 +27,7 @@ apt-get install -y curl
 
 apt-get install -y python-dev
 apt-get install -y python-pip
-apt-get install -y python-mysql
+apt-get install -y python2.7-mysqldb
 apt-get install -y python-numpy python-scipy
 apt-get install -y build-essential python-all-dev libboost-python-dev libssl-dev
 
