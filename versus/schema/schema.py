@@ -12,7 +12,7 @@ Base = declarative_base()
 
 class User(Base):
 
-    __tablename__ = 'users'
+    __tablename__ = 'Users'
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -22,3 +22,16 @@ class User(Base):
     def __repr__(self):
         return "<User(name='%s', fullname='%s', password='%s')>" % (
             self.name, self.fullname, self.password)
+
+
+class Model(Base):
+
+    __tablename__ = 'Models'
+
+    id = Column(Integer, primary_key=True)
+    uid = Column(Integer)
+    name = Column(String)
+
+    def __repr__(self):
+        return "<Model(name='%s', uid='%s')>" % (
+            self.name, self.uid)
