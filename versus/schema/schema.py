@@ -18,6 +18,7 @@ class User(Base):
     name = Column(String)
     fullname = Column(String)
     password = Column(String)
+    date_join = Column(Integer)
 
     def __repr__(self):
         return "<User(name='%s', fullname='%s', password='%s')>" % (
@@ -31,6 +32,7 @@ class Model(Base):
     id = Column(Integer, primary_key=True)
     uid = Column(Integer)
     name = Column(String)
+    date_create = Column(Integer)
 
     def __repr__(self):
         return "<Model(name='%s', uid='%s')>" % (
