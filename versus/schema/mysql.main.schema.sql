@@ -7,7 +7,7 @@ CREATE TABLE `Users` (
   `password` varchar(100) DEFAULT NULL,
   `date_join` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `date_create` (`date_join`),
+  KEY `date_join` (`date_join`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Models` (
@@ -16,5 +16,5 @@ CREATE TABLE `Models` (
   `name` varchar(100) DEFAULT NULL,
   `date_create` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `date_create` (`date_create`),
+  KEY `date_create` (`date_create`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
