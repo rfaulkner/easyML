@@ -44,7 +44,7 @@ class DataIOHDFS(DataIO):
         :param hdfs_path:   HDFS path
         """
         cmd = 'hadoop fs -mkdir {0}'.format(hdfs_path)
-        subprocess.Popen(cmd,
+        subprocess.Popen(cmd.split(),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
@@ -56,7 +56,7 @@ class DataIOHDFS(DataIO):
         :param hdfs_path:   HDFS path
         """
         cmd = 'hadoop fs -rm -r -skipTrash {0}'.format(hdfs_path)
-        subprocess.Popen(cmd,
+        subprocess.Popen(cmd.split(),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
@@ -71,7 +71,7 @@ class DataIOHDFS(DataIO):
         cmd = 'hadoop fs -copyFromLocal {0} {1}'.format(
             fs_path, hdfs_path
         )
-        subprocess.Popen(cmd,
+        subprocess.Popen(cmd.split(),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
@@ -87,7 +87,7 @@ class DataIOHDFS(DataIO):
         cmd = 'hadoop fs -copyToLocal {0} {1}'.format(
             hdfs_path, fs_path
         )
-        subprocess.Popen(cmd,
+        subprocess.Popen(cmd.split(),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
@@ -104,8 +104,9 @@ class DataIOHDFS(DataIO):
         cmd = 'hadoop fs -ls {0}'.format(
             hdfs_path
         )
-        proc = subprocess.Popen(cmd,
+        proc = subprocess.Popen(cmd.split(),
             stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
         )
         return [line.rstrip() for line in proc.stdout]
         # return hdfs.ls(hdfs_path, recursive=True)
