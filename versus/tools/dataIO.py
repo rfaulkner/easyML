@@ -108,7 +108,11 @@ class DataIOHDFS(DataIO):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
-        return [line.rstrip() for line in proc.stdout]
+
+        if proc.stdout:
+            return [line.split().rstrip() for line in proc.stdout[1:]]
+        else:
+            return []
         # return hdfs.ls(hdfs_path, recursive=True)
 
 
