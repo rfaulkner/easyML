@@ -63,4 +63,16 @@ class TestDataIOHDFS(LocalTestCase):
 
 
     def test_list(self):
-        raise NotImplementedError()
+
+        io = DataIOHDFS()
+        hdfs_path = '/user/test'
+
+        tempdir = tempfile.mkdtemp()
+        handle1, fullpath1 = tempfile.mkstemp(dir=tempdir)
+        handle2, fullpath2 = tempfile.mkstemp(dir=tempdir)
+
+        io.copy_to_local(fullpath1, hdfs_path)
+        io.copy_to_local(fullpath2, hdfs_path)
+
+        for i in io.list(hdfs_path):
+            self.assertTrue(i[6] == fullpath2 or i[6] == fullpath1)
