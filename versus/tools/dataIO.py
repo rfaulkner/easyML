@@ -9,9 +9,9 @@ from versus.config import log
 import subprocess
 
 import MySQLdb as mysql
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Table, Column, MetaData
 from sqlalchemy.orm import sessionmaker
-
+from versus.schema import schema
 
 class DataIO(object):
 
@@ -228,11 +228,14 @@ class DataIOMySQL(DataIO):
     def session(self):
         return self.sess
 
-    def create_table(self, table, columns, meta):
+    def create_table(self, name):
         """
         Method for table creation
         """
-        raise NotImplementedError()
+        if hasattr(schema, name):
+            getattr(schema, name).__table__.create(bind=self.engine)
+        else:
+            log.error('Schema object not found for "%s"' % name)
 
     def fetch_rows(self, table, conditions):
         """
