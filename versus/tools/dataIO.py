@@ -3,7 +3,6 @@ Class family for Data IO classes to handle data ingestion and fetch events
 """
 
 import redis
-from versus.config import log
 
 # import pydoop.hdfs as hdfs
 import subprocess
@@ -12,6 +11,9 @@ import MySQLdb as mysql
 from sqlalchemy import create_engine, Table, Column, MetaData
 from sqlalchemy.orm import sessionmaker
 from versus.schema import schema
+
+from versus.config import log
+
 
 class DataIO(object):
 
@@ -237,17 +239,31 @@ class DataIOMySQL(DataIO):
         else:
             log.error('Schema object not found for "%s"' % name)
 
-    def fetch_rows(self, table, conditions):
+    def fetch(self, table, conditions):
         """
         Method to extract rows from database
         """
         raise NotImplementedError()
 
-    def insert_rows(self, table, values):
+    def insert(self, name, **kwargs):
         """
         Method to insert rows in database
+
+        :param name:        object to persist
+        :param **kwargs:    field values
+
+        :return:    boolean indicating status of action
         """
-        raise NotImplementedError()
+        if not self.session:
+            log.error('No session')
+            return False
+        try:
+            self.session.add(getattr(schema, name)(**kwargs))
+            self.session.commit()
+            return True
+        except Exception as e:
+            log.error('Failed to insert row: "%s"' % e.message())
+            return False
 
     def update_rows(self, table, values):
         """
