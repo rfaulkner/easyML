@@ -239,11 +239,16 @@ class DataIOMySQL(DataIO):
         else:
             log.error('Schema object not found for "%s"' % name)
 
-    def fetch(self, table, conditions):
+    def fetch_all_rows(self, name):
         """
-        Method to extract rows from database
+        Method to extract all rows from database.
+
+        :param name:    object to persist
+
+        :return:        row list from table
         """
-        raise NotImplementedError()
+        obj = getattr(schema, name)
+        return self.session.query(obj, obj.name).all()
 
     def insert(self, name, **kwargs):
         """
