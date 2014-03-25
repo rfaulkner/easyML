@@ -270,12 +270,6 @@ class DataIOMySQL(DataIO):
             log.error('Failed to insert row: "%s"' % e.message())
             return False
 
-    def update_rows(self, table, values):
-        """
-        Method to update rows in database
-        """
-        raise NotImplementedError()
-
     def delete(self, qry_obj):
         """
         Method to delete rows from database
