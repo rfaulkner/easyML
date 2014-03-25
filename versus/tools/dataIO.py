@@ -276,11 +276,24 @@ class DataIOMySQL(DataIO):
         """
         raise NotImplementedError()
 
-    def delete(self, table, conditions):
+    def delete(self, qry_obj):
         """
         Method to delete rows from database
+
+        :param qry_obj:        object to delete
+
+        :return:    boolean indicating status of action
         """
-        raise NotImplementedError()
+        if not self.session:
+            log.error('No session')
+            return False
+        try:
+            self.session.delete(qry_obj)
+            self.session.commit()
+            return True
+        except Exception as e:
+            log.error('Failed to delete row "%s": "%s"' % (str(qry_obj), e.message()))
+            return False
 
     def sync_to_schema(self):
         """
