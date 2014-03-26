@@ -244,11 +244,17 @@ class DataIOMySQL(DataIO):
     def create_table(self, name):
         """
         Method for table creation
+
+        :param name:    schema object name
+
+        :return:        boolean indicating status
         """
         if hasattr(schema, name):
             getattr(schema, name).__table__.create(bind=self.engine)
+            return True
         else:
             log.error('Schema object not found for "%s"' % name)
+            return False
 
     def fetch_all_rows(self, name):
         """

@@ -34,4 +34,7 @@ class TestMySQLCreateTable(LocalTestCase):
     """ Test cases for Redis read/writes """
 
     def test_simple(self):
-        raise NotImplementedError()
+        mysql_inst = dio.DataIOMySQL()
+        mysql_inst.connect_lite()
+        self.assertTrue(mysql_inst.create_table('User'))
+
