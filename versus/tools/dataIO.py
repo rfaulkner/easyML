@@ -224,7 +224,9 @@ class DataIOMySQL(DataIO):
                 self.db,
             )
         self.engine = create_engine(connect_str)
-        self.sess = sessionmaker(bind=self.engine)
+        Session = sessionmaker()
+        Session.configure(bind=self.engine)
+        self.sess = Session()
 
     @property
     def session(self):
