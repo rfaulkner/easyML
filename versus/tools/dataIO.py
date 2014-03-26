@@ -224,6 +224,15 @@ class DataIOMySQL(DataIO):
                 self.db,
             )
         self.engine = create_engine(connect_str)
+        self.make_session()
+
+    def connect_lite(self):
+        """ Use an in-memory db """
+        self.engine = create_engine('sqlite://')
+        self.make_session()
+
+    def make_session(self):
+        """ Create a session """
         Session = sessionmaker()
         Session.configure(bind=self.engine)
         self.sess = Session()
