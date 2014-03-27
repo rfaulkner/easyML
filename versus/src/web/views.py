@@ -8,7 +8,7 @@ from versus.config import log
 from versus.config.settings import AUTHORS, LICENSE, HDFS_BUFFER_FILE, \
     __version__, HDFS_STAGE, MAX_BUFFER_SIZE
 from versus.src.web import app
-from versus.tools.dataIO import DataIOHDFS
+from versus.tools.dataIO import DataIOHDFS, DataIOMySQL
 
 from flask import render_template, redirect, url_for, \
     request, escape, flash
@@ -86,6 +86,16 @@ def version():
     return render_template('version.html', version=__version__)
 
 
+def add_model():
+    """Adds a new model."""
+    # TODO - Logic to add model
+    mysql = DataIOMySQL()
+    # mysql.connect(...)
+    # mysql.insert('Model', )
+
+    return redirect(url_for('home'))
+
+
 def ingest():
     """
     Handles form data ingestion.
@@ -136,6 +146,7 @@ view_list = {
     version.__name__: version,
     ingest.__name__: ingest,
     train.__name__: train,
+    add_model.__name__: add_model,
 }
 
 # Dict stores routing paths for each view
@@ -154,7 +165,8 @@ route_deco = {
     contact.__name__: app.route('/contact/'),
     version.__name__: app.route('/version'),
     ingest.__name__: app.route('/ingest', methods=['GET', 'POST']),
-    train.__name__: app.route('/train', methods=['GET', 'POST'])
+    train.__name__: app.route('/train', methods=['GET', 'POST']),
+    add_model.__name__: app.route('/train', methods=['GET', 'POST'])
 }
 
 # Dict stores flag for login required on view
@@ -164,6 +176,7 @@ views_with_anonymous_access = [
     contact.__name__,
     ingest.__name__,
     train.__name__,
+    add_model.__name__,
 ]
 
 # Apply decorators to views
