@@ -241,7 +241,7 @@ class DataIOMySQL(DataIO):
     def session(self):
         return self.sess
 
-    def create_table(self, name):
+    def create_table(self, obj_name):
         """
         Method for table creation
 
@@ -249,14 +249,14 @@ class DataIOMySQL(DataIO):
 
         :return:        boolean indicating status
         """
-        if hasattr(schema, name):
-            getattr(schema, name).__table__.create(bind=self.engine)
+        if hasattr(schema, obj_name):
+            getattr(schema, obj_name).__table__.create(bind=self.engine)
             return True
         else:
-            log.error('Schema object not found for "%s"' % name)
+            log.error('Schema object not found for "%s"' % obj_name)
             return False
 
-    def fetch_all_rows(self, name):
+    def fetch_all_rows(self, obj_name):
         """
         Method to extract all rows from database.
 
@@ -264,10 +264,10 @@ class DataIOMySQL(DataIO):
 
         :return:        row list from table
         """
-        obj = getattr(schema, name)
+        obj = getattr(schema, obj_name)
         return self.session.query(obj, obj.name).all()
 
-    def insert(self, name, **kwargs):
+    def insert(self, obj_name, **kwargs):
         """
         Method to insert rows in database
 
@@ -280,7 +280,7 @@ class DataIOMySQL(DataIO):
             log.error('No session')
             return False
         try:
-            self.session.add(getattr(schema, name)(**kwargs))
+            self.session.add(getattr(schema, obj_name)(**kwargs))
             self.session.commit()
             return True
         except Exception as e:
