@@ -38,3 +38,43 @@ class TestMySQLCreateTable(LocalTestCase):
         mysql_inst.connect_lite()
         self.assertTrue(mysql_inst.create_table('User'))
 
+
+class TestMySQLInsert(LocalTestCase):
+    """ Test cases for Redis read/writes """
+
+    def test_simple(self):
+        mysql_inst = dio.DataIOMySQL()
+        mysql_inst.connect_lite()
+        mysql_inst.create_table('User')
+
+        self.assertTrue(mysql_inst.insert('User',
+                                          id=1,
+                                          name='me',
+                                          fullname='me',
+                                          password='pass',
+                                          date_join=0))
+
+
+class TestMySQLFetchRows(LocalTestCase):
+    """ Test cases for Redis read/writes """
+
+    def test_simple(self):
+        mysql_inst = dio.DataIOMySQL()
+        mysql_inst.connect_lite()
+        mysql_inst.create_table('User')
+        mysql_inst.insert('User', id=1, name='me', fullname='me',
+                          password='pass', date_join=0)
+
+        self.assertTrue(len(mysql_inst.fetch_all_rows('User')) > 0)
+
+
+class TestMySQLDelete(LocalTestCase):
+    """ Test cases for Redis read/writes """
+
+    def test_simple(self):
+        mysql_inst = dio.DataIOMySQL()
+        mysql_inst.connect_lite()
+        mysql_inst.create_table('User')
+
+        for row in mysql_inst.fetch_all_rows('User'):
+            mysql_inst.delete(row)
