@@ -3,6 +3,7 @@ Module implementing the view portion of the MVC pattern.
 """
 
 import os
+import datetime
 
 from versus.config import log
 from versus.config.settings import AUTHORS, LICENSE, HDFS_BUFFER_FILE, \
@@ -87,16 +88,26 @@ def version():
 
 
 def add_model():
-    """Adds a new model."""
+    """ Respond with view for model add form """
     return render_template('add_model.html')
 
 
 def add_model_process():
-    """ Handles processing of add model."""
-    # TODO - Logic to add model
-    mysql = DataIOMySQL()
-    # mysql.connect(...)
-    # mysql.insert('Model', )
+    """ Handles processing of add model """
+    model_name = request.data['modelName'] if 'modelName' in request.data \
+        else None
+    model_type = request.data['modelType'] if 'modelType' in request.data \
+        else None
+
+    if not model_name or not model_type:
+        log.info('Added model (type, name) = "%s", "%s" ' % (model_name,
+                                                             model_type))
+        mysql = DataIOMySQL()
+        mysql.connect()
+        mysql.insert('Model', uid=-1, name=model_name, mtype=model_name,
+                     date_create=datetime.datetime.now().strftime(''))
+    else:
+        log.error('Missing model fields in POST data "%s"' % str(request.data))
 
 
 def ingest():
