@@ -16,8 +16,8 @@ class User(Base):
 
     uid = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
-    fullname = Column(String)
-    password = Column(String)
+    fullname = Column(String(24))
+    password = Column(String(24))
     date_join = Column(Integer)
 
     def __repr__(self):
@@ -31,8 +31,8 @@ class Model(Base):
 
     mid = Column(Integer, primary_key=True, autoincrement=True)
     uid = Column(Integer)
-    name = Column(String)
-    mtype = Column(String)
+    name = Column(String(24))
+    mtype = Column(String(12))
     date_create = Column(Integer)
 
     def __repr__(self):
