@@ -14,7 +14,7 @@ class User(Base):
 
     __tablename__ = 'Users'
 
-    uid = Column(Integer, primary_key=True)
+    uid = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     fullname = Column(String)
     password = Column(String)
@@ -29,7 +29,7 @@ class Model(Base):
 
     __tablename__ = 'Models'
 
-    mid = Column(Integer, primary_key=True)
+    mid = Column(Integer, primary_key=True, autoincrement=True)
     uid = Column(Integer)
     name = Column(String)
     date_create = Column(Integer)
