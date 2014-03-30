@@ -181,8 +181,8 @@ route_deco = {
     version.__name__: app.route('/version'),
     ingest.__name__: app.route('/ingest', methods=['GET', 'POST']),
     train.__name__: app.route('/train', methods=['GET', 'POST']),
-    add_model.__name__: app.route('/train'),
-    add_model_process.__name__: app.route('/train', methods=['POST'])
+    add_model.__name__: app.route('/add_model'),
+    add_model_process.__name__: app.route('/add_model_process', methods=['POST'])
 }
 
 # Dict stores flag for login required on view
