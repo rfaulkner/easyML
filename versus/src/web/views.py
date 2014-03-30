@@ -88,12 +88,15 @@ def version():
 
 def add_model():
     """Adds a new model."""
+    return render_template('add_model.html')
+
+
+def add_model_process():
+    """ Handles processing of add model."""
     # TODO - Logic to add model
     mysql = DataIOMySQL()
     # mysql.connect(...)
     # mysql.insert('Model', )
-
-    return redirect(url_for('home'))
 
 
 def ingest():
@@ -147,6 +150,7 @@ view_list = {
     ingest.__name__: ingest,
     train.__name__: train,
     add_model.__name__: add_model,
+    add_model_process.__name__: add_model_process,
 }
 
 # Dict stores routing paths for each view
@@ -166,7 +170,8 @@ route_deco = {
     version.__name__: app.route('/version'),
     ingest.__name__: app.route('/ingest', methods=['GET', 'POST']),
     train.__name__: app.route('/train', methods=['GET', 'POST']),
-    add_model.__name__: app.route('/train', methods=['GET', 'POST'])
+    add_model.__name__: app.route('/train'),
+    add_model_process.__name__: app.route('/train', methods=['POST'])
 }
 
 # Dict stores flag for login required on view
@@ -177,6 +182,7 @@ views_with_anonymous_access = [
     ingest.__name__,
     train.__name__,
     add_model.__name__,
+    add_model_process.__name__,
 ]
 
 # Apply decorators to views
