@@ -32,6 +32,7 @@ class Model(Base):
     mid = Column(Integer, primary_key=True, autoincrement=True)
     uid = Column(Integer)
     name = Column(String)
+    mtype = Column(String)
     date_create = Column(Integer)
 
     def __repr__(self):
