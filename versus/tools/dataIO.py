@@ -187,7 +187,7 @@ class DataIOMySQL(DataIO):
         'driver': '',
         'host': 'localhost',
         'port': 3306,
-        'db': 'default',
+        'db': 'test',
         'user': 'root',
         'pwrd': '',
     }
@@ -223,6 +223,7 @@ class DataIOMySQL(DataIO):
                 self.host,
                 self.db,
             )
+        log.info('Establishing connection to "%s"' % connect_str)
         self.engine = create_engine(connect_str)
         self.make_session()
 
@@ -284,7 +285,7 @@ class DataIOMySQL(DataIO):
             self.session.commit()
             return True
         except Exception as e:
-            log.error('Failed to insert row: "%s"' % e.message())
+            log.error('Failed to insert row: "%s"' % e.message)
             return False
 
     def delete(self, qry_obj):
